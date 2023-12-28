@@ -29,17 +29,19 @@ public class PlayerInput : MonoBehaviour
         if (Input.GetButtonDown("Fire1"))
         {
             Click();
-            Debug.Log(string.Join(" ",_simpleList));
+            GetComponent<PlayerAttacks>().hado(_simpleList);
+            _allNyuryokuList.Clear();
         }
     }
 
     void FixedUpdate()
     {
         _allNyuryokuList.Add(_tenKey);
-        if (_allNyuryokuList.Count == _nyuryokuYuyo)
+        if (_allNyuryokuList.Count >= _nyuryokuYuyo)
         {
             _allNyuryokuList.RemoveAt(0);
         }
+        Debug.Log(string.Join(" ", _allNyuryokuList));
     }
 
     int InputTenKey()

@@ -5,6 +5,8 @@ using UnityEngine;
 public class PlayerDirection : MonoBehaviour
 {
     [SerializeField] GameObject _enemyPlayer;
+    Vector3 _playersDirection;
+    public Vector3 PlayersDirection {  get { return _playersDirection; } }
     // Start is called before the first frame update
     void Start()
     {
@@ -14,8 +16,8 @@ public class PlayerDirection : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Vector3 direction = _enemyPlayer.transform.position;
-        direction = new Vector3(direction.x, this.transform.position.y, 0);
-        transform.LookAt(direction);
+        _playersDirection = _enemyPlayer.transform.position - this.transform.position;
+        _playersDirection = new Vector3(_playersDirection.x, this.transform.position.y, 0);
+        transform.LookAt(_playersDirection);
     }
 }

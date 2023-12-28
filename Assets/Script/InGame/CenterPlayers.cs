@@ -9,6 +9,7 @@ public class CenterPlayers : MonoBehaviour
     [SerializeField] GameObject _player2;
     [SerializeField] float _camPosY = 1;
     [SerializeField] float _leastCamPos;
+
     // Start is called before the first frame update
     void Start()
     {

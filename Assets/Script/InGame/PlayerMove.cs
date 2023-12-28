@@ -19,14 +19,16 @@ public class PlayerMove : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(_input.TenKey);
+        Vector3 direction = GetComponent<PlayerDirection>().PlayersDirection;
+        direction.y = 0;
+        //Debug.Log(_input.TenKey);
         if(_input.TenKey == 6)
         {
-            _rb.velocity = new Vector3(_movePower, _rb.velocity.y, 0);
+            _rb.velocity = direction.normalized * _movePower;
         }
         else if(_input.TenKey == 4)
         {
-            _rb.velocity = new Vector3(_movePower * -1, _rb.velocity.y, 0);
+            _rb.velocity = direction.normalized * _movePower * -1;
         }
         else
         {
