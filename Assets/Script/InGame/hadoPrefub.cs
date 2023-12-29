@@ -17,7 +17,6 @@ public class hadoPrefub : MonoBehaviour
     public void SetVec(Vector3 vec)
     {
         _moveDirection = vec.normalized;
-        Debug.Log(vec);
     }
 
     // Update is called once per frame

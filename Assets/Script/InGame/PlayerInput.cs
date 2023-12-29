@@ -41,7 +41,6 @@ public class PlayerInput : MonoBehaviour
         {
             _allNyuryokuList.RemoveAt(0);
         }
-        Debug.Log(string.Join(" ", _allNyuryokuList));
     }
 
     int InputTenKey()

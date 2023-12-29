@@ -6,6 +6,7 @@ public class PlayerData : MonoBehaviour
 {
     [SerializeField] int _maxPlayerHP;
     int _nowHp;
+    public int NowHp {  get { return _nowHp; } }
     // Start is called before the first frame update
     void Start()
     {
