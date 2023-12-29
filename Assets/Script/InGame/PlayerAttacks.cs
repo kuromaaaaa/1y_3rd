@@ -26,8 +26,7 @@ public class PlayerAttacks : MonoBehaviour
             Debug.Log("îgìÆåù");
             GameObject tama = Instantiate(_hadoPrefub);
             tama.transform.position = this.transform.position;
-            Vector3 tamaVec = GetComponent<PlayerDirection>().PlayersDirection;
-            tamaVec = new Vector3(tamaVec.x, 0, 0);
+            Vector3 tamaVec = GetComponent<PlayerDirection>().PlayerFo;
             tama.GetComponent<hadoPrefub>().SetVec(tamaVec);
         }
     }

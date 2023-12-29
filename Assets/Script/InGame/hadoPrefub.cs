@@ -7,6 +7,7 @@ public class hadoPrefub : MonoBehaviour
 {
     Rigidbody _rb;
     Vector3 _moveDirection;
+    string enemy = "Enemy";
     // Start is called before the first frame update
     void Start()
     {
@@ -23,5 +24,14 @@ public class hadoPrefub : MonoBehaviour
     void Update()
     {
         _rb.velocity = _moveDirection * 10;
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.gameObject.tag == enemy)
+        {
+            other.gameObject.GetComponent<PlayerDamageHit>().DamageHit(60, true, new Vector3(10, 10, 0));
+            Destroy(gameObject);
+        }
     }
 }
