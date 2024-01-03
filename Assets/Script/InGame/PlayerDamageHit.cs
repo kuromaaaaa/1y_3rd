@@ -20,7 +20,7 @@ public class PlayerDamageHit : MonoBehaviour
     public void DamageHit(int damage, bool air, Vector3 direc)
     {
         int tenkey = GetComponent<PlayerInput>().TenKey;
-        if(tenkey == 4 || tenkey == 1)
+        if((tenkey == 4 || tenkey == 1) && !GetComponent<PlayerData>().Damaging)
         {
             _rb.AddForce(GetComponent<PlayerDirection>().PlayerFo * -1);
         }
@@ -32,7 +32,7 @@ public class PlayerDamageHit : MonoBehaviour
         }
         else
         {
-            _rb.AddForce(GetComponent<PlayerDirection>().PlayerFo * -1);
+            _rb.AddForce(GetComponent<PlayerDirection>().PlayerFo * -1,ForceMode.Impulse);
             GetComponent<PlayerData>().MinusHP(damage);
             GetComponent<PlayerData>().Damaging = true;
         }

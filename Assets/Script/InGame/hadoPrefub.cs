@@ -33,11 +33,13 @@ public class hadoPrefub : MonoBehaviour
         if (_player1Shot && other.gameObject.tag == "Player2")
         {
             pdh.DamageHit(60, true, new Vector3(10, 10, 0));
+            Debug.Log("”g“®hit");
             Destroy(gameObject);
         }
         if (!_player1Shot && other.gameObject.tag == "Player1")
         {
             pdh.DamageHit(60, true, new Vector3(10, 10, 0));
+            Debug.Log("”g“®hit");
             Destroy(gameObject);
         }
     }
