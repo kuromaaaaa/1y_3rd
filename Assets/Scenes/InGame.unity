@@ -144,7 +144,7 @@ GameObject:
   - component: {fileID: 243815453}
   m_Layer: 0
   m_Name: Player2
-  m_TagString: Enemy
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -356,6 +356,8 @@ MonoBehaviour:
   _player2: {fileID: 243815447}
   _p1HP: {fileID: 2097142691}
   _p2HP: {fileID: 1592952592}
+  _p1tag: 0
+  _p2tag: 0
 --- !u!4 &569794380
 Transform:
   m_ObjectHideFlags: 0
@@ -648,8 +650,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 3, z: 1}
-  m_Center: {x: 5, y: 0, z: 0}
+  m_Size: {x: 1, y: 7, z: 1}
+  m_Center: {x: 5, y: 2, z: 0}
 --- !u!65 &851207810
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -661,8 +663,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 3, z: 1}
-  m_Center: {x: -5, y: 0, z: 0}
+  m_Size: {x: 1, y: 7, z: 1}
+  m_Center: {x: -5, y: 2, z: 0}
 --- !u!1 &896341801
 GameObject:
   m_ObjectHideFlags: 0
@@ -752,7 +754,7 @@ GameObject:
   - component: {fileID: 1070137801}
   m_Layer: 0
   m_Name: Player1
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

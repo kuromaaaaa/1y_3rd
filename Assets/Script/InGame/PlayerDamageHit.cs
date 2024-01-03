@@ -28,11 +28,13 @@ public class PlayerDamageHit : MonoBehaviour
         {
             _rb.AddForce(direc,ForceMode.Impulse);
             GetComponent<PlayerData>().MinusHP(damage);
+            GetComponent<PlayerData>().Damaging = true;
         }
         else
         {
             _rb.AddForce(GetComponent<PlayerDirection>().PlayerFo * -1);
             GetComponent<PlayerData>().MinusHP(damage);
+            GetComponent<PlayerData>().Damaging = true;
         }
     }
 }

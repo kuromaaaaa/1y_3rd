@@ -7,7 +7,9 @@ public class hadoPrefub : MonoBehaviour
 {
     Rigidbody _rb;
     Vector3 _moveDirection;
-    string enemy = "Enemy";
+    bool _player1Shot;
+    public bool Player1Shot { set { _player1Shot = value; } }
+    //string enemy = "Enemy";
     // Start is called before the first frame update
     void Start()
     {
@@ -27,9 +29,15 @@ public class hadoPrefub : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject.tag == enemy)
+        PlayerDamageHit pdh = other.gameObject.GetComponent<PlayerDamageHit>();
+        if (_player1Shot && other.gameObject.tag == "Player2")
         {
-            other.gameObject.GetComponent<PlayerDamageHit>().DamageHit(60, true, new Vector3(10, 10, 0));
+            pdh.DamageHit(60, true, new Vector3(10, 10, 0));
+            Destroy(gameObject);
+        }
+        if (!_player1Shot && other.gameObject.tag == "Player1")
+        {
+            pdh.DamageHit(60, true, new Vector3(10, 10, 0));
             Destroy(gameObject);
         }
     }

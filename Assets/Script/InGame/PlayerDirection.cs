@@ -19,7 +19,8 @@ public class PlayerDirection : MonoBehaviour
     {
         _playersDirection = _enemyPlayer.transform.position - this.transform.position;
         _playersDirection = new Vector3(_playersDirection.x, this.transform.position.y, 0);
-        transform.LookAt(_playersDirection);
+        Vector3 _playerLook = new Vector3(this.transform.position.x + _playersDirection.x, this.transform.position.y, this.transform.position.z);
+        transform.LookAt(_playerLook);
         _playerFo = _playersDirection;
         _playerFo.y = 0;
         _playerFo = _playerFo.normalized;

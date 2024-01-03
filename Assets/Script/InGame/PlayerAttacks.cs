@@ -28,6 +28,14 @@ public class PlayerAttacks : MonoBehaviour
             tama.transform.position = this.transform.position;
             Vector3 tamaVec = GetComponent<PlayerDirection>().PlayerFo;
             tama.GetComponent<hadoPrefub>().SetVec(tamaVec);
+            if(this.tag == "Player1")
+            {
+                tama.GetComponent<hadoPrefub>().Player1Shot = true;
+            }
+            else
+            {
+                tama.GetComponent<hadoPrefub>().Player1Shot = false;
+            }
         }
     }
 }
