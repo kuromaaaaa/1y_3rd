@@ -36,4 +36,8 @@ public class PlayerMove : MonoBehaviour
             _rb.velocity = new Vector3(0, _rb.velocity.y, 0);
         }
     }
+    void OnAnimatorMove()
+    {
+        //transform.position = GetComponent<Animator>().rootPosition;
+    }
 }

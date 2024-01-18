@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class PlayerInput : MonoBehaviour
 {
-    [SerializeField] GameObject _enemyPlayer;
     [SerializeField] float _controllerDeadZone = 0.5f;
     [SerializeField] int _nyuryokuYuyo = 20;
     List<int> _allNyuryokuList = new List<int>();
@@ -23,7 +22,7 @@ public class PlayerInput : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        _1pPlayer = (gameObject.transform.position.x < _enemyPlayer.transform.position.x);
+        _1pPlayer = (gameObject.transform.position.x < GetComponent<PlayerData>().Enemy.transform.position.x);
         _h = 0; _v = 0;
         _tenKey = InputTenKey();
         if (Input.GetButtonDown("Fire1"))

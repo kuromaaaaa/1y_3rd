@@ -5,15 +5,18 @@ using UnityEngine;
 
 public class CenterPlayers : MonoBehaviour
 {
-    [SerializeField] GameObject _player1;
-    [SerializeField] GameObject _player2;
+    
+    GameObject _player1;
+    GameObject _player2;
     [SerializeField] float _camPosY = 1;
     [SerializeField] float _leastCamPos;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        GameObject GM = GameObject.Find("GameManager");
+        _player1 = GM.GetComponent<GameManager>().PlayerArr[0];
+        _player2 = GM.GetComponent<GameManager>().PlayerArr[1];
     }
 
     // Update is called once per frame

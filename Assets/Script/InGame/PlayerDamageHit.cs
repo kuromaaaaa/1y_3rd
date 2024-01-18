@@ -20,6 +20,10 @@ public class PlayerDamageHit : MonoBehaviour
     public void DamageHit(int damage, bool air, Vector3 direc)
     {
         int tenkey = GetComponent<PlayerInput>().TenKey;
+        if(GetComponent<PlayerData>().PlayerDirecRight)
+        {
+            direc = new Vector3(direc.x * -1, direc.y, direc.z);
+        }
         if((tenkey == 4 || tenkey == 1) && !GetComponent<PlayerData>().Damaging)
         {
             _rb.AddForce(GetComponent<PlayerDirection>().PlayerFo * -1);
