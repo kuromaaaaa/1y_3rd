@@ -13,23 +13,39 @@ public class PlayerInput : MonoBehaviour
     public int TenKey { get { return _tenKey; } }
     bool _1pPlayer;
     float _h, _v;
+
+    PlayerAttacks _pa;
     // Start is called before the first frame update
     void Start()
     {
-
+        _pa = GetComponent<PlayerAttacks>();
     }
 
     // Update is called once per frame
     void Update()
     {
+        bool jakuP = Input.GetButton("Fire1");
+        bool kyouK = Input.GetButton("Fire2");
         _1pPlayer = (gameObject.transform.position.x < GetComponent<PlayerData>().Enemy.transform.position.x);
         _h = 0; _v = 0;
         _tenKey = InputTenKey();
-        if (Input.GetButtonDown("Fire1"))
+        if (jakuP)
         {
-            Click();
-            GetComponent<PlayerAttacks>().hado(_simpleList);
+            Click(); 
+            if ((_simpleList.Count > 2 && _simpleList[_simpleList.Count - 1] == 6 && _simpleList[_simpleList.Count - 2] == 3 && _simpleList[_simpleList.Count - 3] == 2)
+            || (_simpleList.Count > 3 && _simpleList[_simpleList.Count - 2] == 6 && _simpleList[_simpleList.Count - 3] == 3 && _simpleList[_simpleList.Count - 4] == 2))
+            {
+                _pa.hadoHassei();
+            }
+            else
+            {
+                _pa.pressP(_tenKey);
+            }
             _allNyuryokuList.Clear();
+        }
+        if (kyouK)
+        {
+            _pa.pressK(_tenKey);
         }
     }
 
