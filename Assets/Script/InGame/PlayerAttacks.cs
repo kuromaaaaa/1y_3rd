@@ -8,6 +8,8 @@ public class PlayerAttacks : MonoBehaviour
     [SerializeField] GameObject _hadoPrefub;
     [SerializeField] GameObject _5Kcolli;
     [SerializeField] GameObject _2Kcolli;
+    [SerializeField] GameObject _5Pcolli;
+    [SerializeField] GameObject _2Pcolli;
     bool _hado = false;
     bool _5K = false;
     bool _2K = false;
@@ -65,15 +67,26 @@ public class PlayerAttacks : MonoBehaviour
         }
     }
 
-    public void normal2K()
+    public void normal5P()
     {
-        _2Kcolli.SetActive(true);
+        _5Pcolli.SetActive(true);
+    }
+
+    public void normal2P()
+    {
+        _2Pcolli.SetActive(true);
     }
 
     public void normal5K()
     {
         _5Kcolli.SetActive(true);
     }
+
+    public void normal2K()
+    {
+        _2Kcolli.SetActive(true);
+    }
+
 
     public void hado()
     {

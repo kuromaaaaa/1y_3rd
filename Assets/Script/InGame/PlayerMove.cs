@@ -53,12 +53,16 @@ public class PlayerMove : MonoBehaviour
             _moveBack = false;
             _moveForward = false;
         }
+        else if(_crouch && !(_input.TenKey == 1 || _input.TenKey == 2 || _input.TenKey == 3))
+        {
+            _crouch = false;
+        }
         else if(!_pd.Damaging)
         {
             _rb.velocity = new Vector3(0, _rb.velocity.y, 0);
             _moveForward = false;
             _moveBack = false;
-            _crouch = false;
+            //_crouch = false;
         }
         if(_anim)
         {

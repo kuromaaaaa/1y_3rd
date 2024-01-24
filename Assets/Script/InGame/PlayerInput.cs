@@ -26,6 +26,7 @@ public class PlayerInput : MonoBehaviour
     {
         bool jakuP = Input.GetButton("Fire1");
         bool kyouK = Input.GetButton("Fire2");
+        Debug.Log(jakuP + " " + kyouK);
         _1pPlayer = (gameObject.transform.position.x < GetComponent<PlayerData>().Enemy.transform.position.x);
         _h = 0; _v = 0;
         _tenKey = InputTenKey();
