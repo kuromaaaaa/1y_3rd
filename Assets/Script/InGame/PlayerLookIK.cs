@@ -20,7 +20,10 @@ public class PlayerLookIK : MonoBehaviour
 
     private void OnAnimatorIK(int layerIndex)
     {
-        _anim.SetLookAtWeight(1);
-        _anim.SetLookAtPosition(_target.position);
+        if (!GetComponent<PlayerAttacks>().Syoryu)
+        {
+            _anim.SetLookAtWeight(1);
+            _anim.SetLookAtPosition(_target.position);
+        }
     }
 }

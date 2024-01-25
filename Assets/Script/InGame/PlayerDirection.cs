@@ -16,8 +16,16 @@ public class PlayerDirection : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        _playersDirection = GetComponent<PlayerData>().Enemy.transform.position - this.transform.position;
-        _playersDirection = new Vector3(_playersDirection.x, this.transform.position.y, 0);
+        if(gameObject.transform.position.x < GetComponent<PlayerData>().Enemy.transform.position.x)
+        {
+            _playersDirection = new Vector3(1, this.transform.position.y, 0);
+        }
+        else
+        {
+            _playersDirection = new Vector3(-1, this.transform.position.y, 0);
+        }
+        //_playersDirection = GetComponent<PlayerData>().Enemy.transform.position - this.transform.position;
+        //_playersDirection = new Vector3(_playersDirection.x, this.transform.position.y, 0);
         Vector3 _playerLook = new Vector3(this.transform.position.x + _playersDirection.normalized.x, this.transform.position.y, this.transform.position.z + (GetComponent<PlayerData>().PlayerDirecRight ? -1:1));
         Debug.DrawLine(this.transform.position, _playerLook);
         transform.LookAt(_playerLook);

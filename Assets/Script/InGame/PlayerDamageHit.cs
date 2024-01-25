@@ -19,6 +19,7 @@ public class PlayerDamageHit : MonoBehaviour
 
     public void DamageHit(int damage, bool air, Vector3 direc)
     {
+        _rb.velocity = Vector3.zero;
         int tenkey = GetComponent<PlayerInput>().TenKey;
         if(GetComponent<PlayerData>().PlayerDirecRight)
         {

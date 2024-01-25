@@ -9,7 +9,8 @@ public class CenterPlayers : MonoBehaviour
     GameObject _player1;
     GameObject _player2;
     [SerializeField] float _camPosY = 1;
-    [SerializeField] float _leastCamPos;
+    [SerializeField] float _minCamPos;
+    [SerializeField] float _maxCamPos;
 
     // Start is called before the first frame update
     void Start()
@@ -29,8 +30,10 @@ public class CenterPlayers : MonoBehaviour
         Vec1to2 = new Vector3(Vec1to2.x, 0, 0);
         transform.position = p1t + (Vec1to2.normalized) * distance/2;
         transform.position = new Vector3(transform.position.x, _camPosY, transform.position.z);
-        if(distance < _leastCamPos)
-            distance = _leastCamPos;
+        if(distance < _minCamPos)
+            distance = _minCamPos;
+        if(distance > _maxCamPos)
+            distance = _maxCamPos;
         Vector3 CamPos = gameObject.transform.position - new Vector3(0, 0, distance);
         Camera.main.transform.position = CamPos;
     }

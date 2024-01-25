@@ -13,32 +13,76 @@ public class PlayerInput : MonoBehaviour
     public int TenKey { get { return _tenKey; } }
     bool _1pPlayer;
     float _h, _v;
+    bool _1P = false;
 
     PlayerAttacks _pa;
     // Start is called before the first frame update
     void Start()
     {
         _pa = GetComponent<PlayerAttacks>();
+        if (this.gameObject.tag == "Player1")
+            _1P = true;
     }
 
     // Update is called once per frame
     void Update()
     {
-        bool jakuP = Input.GetButton("Fire1");
-        bool kyouK = Input.GetButton("Fire2");
-        Debug.Log(jakuP + " " + kyouK);
+
+        bool jakuP;
+        bool kyouK;
+        if(_1P)
+        {
+            jakuP = Input.GetButton("c1_XorP");
+            kyouK = Input.GetButton("c1_AorK");
+        }
+        else 
+        { 
+            jakuP = Input.GetButton("c2_XorP");
+            kyouK = Input.GetButton("c2_AorK");
+        }
+
         _1pPlayer = (gameObject.transform.position.x < GetComponent<PlayerData>().Enemy.transform.position.x);
         _h = 0; _v = 0;
         _tenKey = InputTenKey();
         if (jakuP)
         {
-            Click(); 
-            if ((_simpleList.Count > 2 && _simpleList[_simpleList.Count - 1] == 6 && _simpleList[_simpleList.Count - 2] == 3 && _simpleList[_simpleList.Count - 3] == 2)
-            || (_simpleList.Count > 3 && _simpleList[_simpleList.Count - 2] == 6 && _simpleList[_simpleList.Count - 3] == 3 && _simpleList[_simpleList.Count - 4] == 2))
+            Click();
+            if(_simpleList.Count > 1)
+                Debug.Log(string.Join(" ", _simpleList));
+            if (_simpleList.Count > 2)
             {
+                if (_simpleList.Count > 2 && _simpleList[_simpleList.Count - 1] == 3 && _simpleList[_simpleList.Count - 2] == 2 && _simpleList[_simpleList.Count - 3] == 6)
+                {//¸—³Œ
+                    _pa.syoryuHassei();
+                }
+            }
+            if(_simpleList.Count > 3)
+            {
+                if (_simpleList[_simpleList.Count - 1] == 3 && _simpleList[_simpleList.Count - 2] == 2 && _simpleList[_simpleList.Count - 4] == 6)
+                {
+                    _pa.syoryuHassei();
+                }
+            }
+            if(_simpleList.Count > 4)
+            {
+                if (_simpleList[_simpleList.Count - 2] == 3 && _simpleList[_simpleList.Count - 3] == 2 && _simpleList[_simpleList.Count - 5] == 6)
+                {
+                    _pa.syoryuHassei();
+                }
+            }
+            if (!_pa.Attacking &&((_simpleList.Count > 2 && _simpleList[_simpleList.Count - 1] == 6 && _simpleList[_simpleList.Count - 2] == 3 && _simpleList[_simpleList.Count - 3] == 2)
+                || (_simpleList.Count > 3 && _simpleList[_simpleList.Count - 2] == 6 && _simpleList[_simpleList.Count - 3] == 3 && _simpleList[_simpleList.Count - 4] == 2)))
+            {//”g“®Œ
                 _pa.hadoHassei();
             }
-            else
+            /*
+            else if ((_simpleList.Count > 2 && _simpleList[_simpleList.Count - 1] == 6 && _simpleList[_simpleList.Count - 2] == 3 && _simpleList[_simpleList.Count - 3] == 2)
+            || (_simpleList.Count > 3 && _simpleList[_simpleList.Count - 2] == 6 && _simpleList[_simpleList.Count - 3] == 3 && _simpleList[_simpleList.Count - 4] == 2))
+            {//”g“®Œ
+                _pa.hadoHassei();
+            }
+            */
+            else if(!_pa.Attacking)
             {
                 _pa.pressP(_tenKey);
             }
@@ -61,10 +105,20 @@ public class PlayerInput : MonoBehaviour
 
     int InputTenKey()
     {
-        _h += Input.GetAxisRaw("Horizontal") > _controllerDeadZone ? 1 : 0;
-        _h += Input.GetAxisRaw("Horizontal") < _controllerDeadZone * -1 ? -1 : 0;
-        _v += Input.GetAxisRaw("Vertical") > _controllerDeadZone ? 1 : 0;
-        _v += Input.GetAxisRaw("Vertical") < _controllerDeadZone * -1 ? -1 : 0;
+        if (_1P)
+        {
+            _h += Input.GetAxisRaw("c1_axisX") > _controllerDeadZone ? 1 : 0;
+            _h += Input.GetAxisRaw("c1_axisX") < _controllerDeadZone * -1 ? -1 : 0;
+            _v += Input.GetAxisRaw("c1_axisY") > _controllerDeadZone ? 1 : 0;
+            _v += Input.GetAxisRaw("c1_axisY") < _controllerDeadZone * -1 ? -1 : 0;
+        }
+        else
+        {
+            _h += Input.GetAxisRaw("c2_axisX") > _controllerDeadZone ? 1 : 0;
+            _h += Input.GetAxisRaw("c2_axisX") < _controllerDeadZone * -1 ? -1 : 0;
+            _v += Input.GetAxisRaw("c2_axisY") > _controllerDeadZone ? 1 : 0;
+            _v += Input.GetAxisRaw("c2_axisY") < _controllerDeadZone * -1 ? -1 : 0;
+        }
 
         if (_1pPlayer)
         {

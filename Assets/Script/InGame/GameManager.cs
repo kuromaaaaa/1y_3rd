@@ -4,22 +4,20 @@ using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class GameManager : MonoBehaviour
 {
     GameObject _player1;
     GameObject _player2;
-    [SerializeField] GameObject _p1HP;
-    [SerializeField] GameObject _p2HP;
-    Text _p1Tx;
-    Text _p2Tx;
+    [SerializeField] Text _timeTx;
+    [SerializeField] Text _winner;
     GameObject[] _playerArr;
+    float _time = 99;
     public GameObject[] PlayerArr { get { return _playerArr; } }
     // Start is called before the first frame update
     void Start()
     {
-        _p1Tx = _p1HP.GetComponent<Text>();
-        _p2Tx = _p2HP.GetComponent<Text>();
         _playerArr = GameObject.FindGameObjectsWithTag("Player");
         if (_playerArr[0].transform.position.x < _playerArr[1].transform.position.x)
         {
@@ -46,7 +44,15 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        _p1Tx.text = ("Player1 HP" + " " + _player1.GetComponent<PlayerData>().NowHp);
-        _p2Tx.text = ("Player2 HP" + " " + _player2.GetComponent<PlayerData>().NowHp);
+        _time -= Time.deltaTime;
+        int intTime = (int)_time;
+        _timeTx.text = (intTime.ToString());
+    }
+
+    public void lose(string player)
+    {
+        if (player == "Player1")
+            _winner.text = "2P PLAYER WIN";
+        else _winner.text = "1P PLAYER WIN";
     }
 }

@@ -8,6 +8,7 @@ TagManager:
   - Player1
   - Player2
   - Hado
+  - Ground
   layers:
   - Default
   - TransparentFX
