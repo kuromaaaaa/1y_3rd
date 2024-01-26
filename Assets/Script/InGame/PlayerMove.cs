@@ -57,7 +57,7 @@ public class PlayerMove : MonoBehaviour
         {
             _crouch = false;
         }
-        else if(!_pd.Damaging)
+        else if(!_pd.Damaging && !_pa.SyoryuMove)
         {
             _rb.velocity = new Vector3(0, _rb.velocity.y, 0);
             _moveForward = false;

@@ -7,10 +7,11 @@ public class PlayerDirection : MonoBehaviour
     Vector3 _playersDirection;
     Vector3 _playerFo;
     public Vector3 PlayerFo {  get { return _playerFo; } }
+    PlayerAttacks _pa;
     // Start is called before the first frame update
     void Start()
     {
-        
+        _pa = GetComponent<PlayerAttacks>();
     }
 
     // Update is called once per frame
@@ -28,7 +29,8 @@ public class PlayerDirection : MonoBehaviour
         //_playersDirection = new Vector3(_playersDirection.x, this.transform.position.y, 0);
         Vector3 _playerLook = new Vector3(this.transform.position.x + _playersDirection.normalized.x, this.transform.position.y, this.transform.position.z + (GetComponent<PlayerData>().PlayerDirecRight ? -1:1));
         Debug.DrawLine(this.transform.position, _playerLook);
-        transform.LookAt(_playerLook);
+        if(!_pa.Attacking)
+            transform.LookAt(_playerLook);
         _playerFo = _playersDirection;
         _playerFo.y = 0;
         _playerFo = _playerFo.normalized;

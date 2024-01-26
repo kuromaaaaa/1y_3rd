@@ -44,6 +44,10 @@ public class PlayerInput : MonoBehaviour
         _1pPlayer = (gameObject.transform.position.x < GetComponent<PlayerData>().Enemy.transform.position.x);
         _h = 0; _v = 0;
         _tenKey = InputTenKey();
+        if (jakuP && kyouK)
+        {
+            _pa.PandK();
+        }
         if (jakuP)
         {
             Click();
