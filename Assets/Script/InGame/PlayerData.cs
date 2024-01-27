@@ -5,11 +5,17 @@ using UnityEngine.UI;
 
 public class PlayerData : MonoBehaviour
 {
+    //HPÇ∆HPÉoÅ[
     [SerializeField] int _maxPlayerHP;
-    Image _hpImage;
-    GameObject _gm;
     int _nowHp;
-    public int NowHp {  get { return _nowHp; } }
+    public int NowHp { get { return _nowHp; } }
+    int _comboHp;
+    float _hpImageMaxSize;
+    RectTransform _hpBarRedRtf;
+    RectTransform _hpBarBlueRtf;
+
+
+    GameObject _gm;
     bool _player1;
     bool _playerDirecRight;
     public bool PlayerDirecRight { get { return _playerDirecRight; } }
@@ -17,11 +23,13 @@ public class PlayerData : MonoBehaviour
     public GameObject Enemy { set { _enemy = value; } get { return _enemy; } }
     public bool Player1 { set { _player1 = value; } }
     bool _damaging = false;
-    public bool Damaging 
+    public bool Damaging
     {
         set { _damaging = value; }
         get { return _damaging; }
     }
+    int _isComboedCount = 0;
+    public int IsComboCount { set { _isComboedCount = value; } get { return _isComboedCount; } }
     bool _isGround = false;
     public bool IsGround { get { return _isGround; } }
     // Start is called before the first frame update
@@ -30,11 +38,15 @@ public class PlayerData : MonoBehaviour
         _nowHp = _maxPlayerHP;
         if (this.gameObject.tag == "Player1")
         {
-            _hpImage = GameObject.Find("HPbar1P_blue").GetComponent<Image>();
+            _hpBarBlueRtf = GameObject.Find("HPbar1P_blue").GetComponent<RectTransform>();
+            _hpBarRedRtf = GameObject.Find("HPbar1P_red").GetComponent<RectTransform>();
+            _hpImageMaxSize = _hpBarBlueRtf.sizeDelta.x;
         }
         else 
         { 
-            _hpImage = GameObject.Find("HPbar2P_blue").GetComponent<Image>();
+            _hpBarBlueRtf = GameObject.Find("HPbar2P_blue").GetComponent<RectTransform>();
+            _hpBarRedRtf = GameObject.Find("HPbar2P_red").GetComponent<RectTransform>();
+            _hpImageMaxSize = _hpBarBlueRtf.sizeDelta.x;
         }
         _gm = GameObject.Find("GameManager");
     }
@@ -54,7 +66,10 @@ public class PlayerData : MonoBehaviour
         {
             _gm.GetComponent<GameManager>().lose(gameObject.tag);
         }
-        _hpImage.fillAmount = 1f * _nowHp / _maxPlayerHP;
+        _hpBarBlueRtf.sizeDelta = new Vector2(_hpImageMaxSize * (1.0f * _nowHp / _maxPlayerHP),_hpBarBlueRtf.sizeDelta.y);
+        if(!_damaging || _nowHp <= 0)
+        _hpBarRedRtf.sizeDelta = new Vector2(_hpImageMaxSize * (1.0f * _nowHp / _maxPlayerHP), _hpBarRedRtf.sizeDelta.y);
+        //_nowHp / _maxPlayerHP;
     }
 
     public void MinusHP(int minus)
@@ -68,6 +83,7 @@ public class PlayerData : MonoBehaviour
         {
             _isGround = true;
             _damaging = false;
+            _isComboedCount = 0;
         }
     }
     private void OnCollisionExit(Collision collision)

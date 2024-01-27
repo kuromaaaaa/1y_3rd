@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -96,6 +97,9 @@ public class PlayerInput : MonoBehaviour
         {
             _pa.pressK(_tenKey);
         }
+        if (jakuP && kyouK) Debug.Log("PK");
+        else if (jakuP) Debug.Log("P");
+        else if (kyouK) Debug.Log("K");
     }
 
     void FixedUpdate()

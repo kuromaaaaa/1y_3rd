@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class PlayerNormalAttack : MonoBehaviour
 {
-    [SerializeField] int _SeriJizoku = 2;
+    [SerializeField] int _CollisionJizoku = 2;
     [SerializeField] int _damage = 0;
     [SerializeField] bool _air;
     [SerializeField] Vector3 _huttobi;
@@ -19,7 +19,7 @@ public class PlayerNormalAttack : MonoBehaviour
 
     private void OnEnable()
     {
-        _jizoku = _SeriJizoku;
+        _jizoku = _CollisionJizoku;
     }
 
     // Update is called once per frame

@@ -11,6 +11,7 @@ public class PlayerAttacks : MonoBehaviour
     [SerializeField] GameObject _5Pcolli;
     [SerializeField] GameObject _2Pcolli;
     [SerializeField] GameObject _syoryuColli;
+    [SerializeField] GameObject _throwColli;
     PlayerData _pdata;
     PlayerDirection _pdire;
     Rigidbody _rb;
@@ -19,10 +20,6 @@ public class PlayerAttacks : MonoBehaviour
     public bool SyoryuMove { get { return _syoryuMove; } }
     public bool Syoryu { get { return _syoryu; } }
     bool _hado = false;
-    bool _5K = false;
-    bool _2K = false;
-    bool _5P = false;
-    bool _2P = false;
     bool _attacking = false;
     bool _nageKanou = false;
     public bool Attacking { get { return _attacking; } }
@@ -39,12 +36,6 @@ public class PlayerAttacks : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        _anim.SetBool("SYORYU", _syoryu);
-        _anim.SetBool("HADO", _hado);
-        _anim.SetBool("5K", _5K);
-        _anim.SetBool("2K", _2K);
-        _anim.SetBool("5P", _5P);
-        _anim.SetBool("2P", _2P);
         if(_syoryuMove)
         {
             _rb.velocity = _pdire.PlayerFo * 2f;
@@ -90,14 +81,12 @@ public class PlayerAttacks : MonoBehaviour
         {
             Debug.Log("2P");
             _anim.SetTrigger("trigger2P");
-            _2P = true;
             _attacking = true;
         }
         else if (!_attacking && _pdata.IsGround)
         {
             Debug.Log("5P");
             _anim.SetTrigger("trigger5P");
-            _5P = true;
             _attacking = true;
         }
     }
@@ -107,29 +96,25 @@ public class PlayerAttacks : MonoBehaviour
         {
             Debug.Log("2K");
             _anim.SetTrigger("trigger2K");
-            _2K = true;
             _attacking = true;
         }
         else if(!_attacking && _pdata.IsGround)
         {
             Debug.Log("5K");
             _anim.SetTrigger("trigger5K");
-            _5K = true;
             _attacking = true;
         }
     }
 
     public void PandK()
     {
-        Debug.Log("“Š‚°");
         if (_nageKanou && _pdata.IsGround)
+        {
+            Debug.Log("“Š‚°");
             _anim.SetTrigger("triggerThrow");
+        }
         _syoryu = false;
         _hado = false;
-        _5K = false;
-        _2K = false;
-        _5P = false;
-        _2P = false;
     }
 
     public void normal5P()
@@ -150,6 +135,11 @@ public class PlayerAttacks : MonoBehaviour
     public void normal2K()
     {
         _2Kcolli.SetActive(true);
+    }
+
+    public void throwColli()
+    {
+        _throwColli.SetActive(true);
     }
 
 
@@ -175,11 +165,8 @@ public class PlayerAttacks : MonoBehaviour
         _syoryu = false;
         _hado = false;
         _attacking = false;
-        _5K = false;
-        _2K = false;
-        _5P = false;
-        _2P = false;
         _nageKanou = true;
+        //_rb.isKinematic = false;
     }
 
     public void nageKyan()
