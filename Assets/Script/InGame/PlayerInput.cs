@@ -42,7 +42,7 @@ public class PlayerInput : MonoBehaviour
             kyouK = Input.GetButton("c2_AorK");
         }
 
-        _1pPlayer = (gameObject.transform.position.x < GetComponent<PlayerData>().Enemy.transform.position.x);
+        _1pPlayer = GetComponent<PlayerData>().PlayerDirecRight;
         _h = 0; _v = 0;
         _tenKey = InputTenKey();
         if (jakuP && kyouK)
@@ -97,9 +97,6 @@ public class PlayerInput : MonoBehaviour
         {
             _pa.pressK(_tenKey);
         }
-        if (jakuP && kyouK) Debug.Log("PK");
-        else if (jakuP) Debug.Log("P");
-        else if (kyouK) Debug.Log("K");
     }
 
     void FixedUpdate()

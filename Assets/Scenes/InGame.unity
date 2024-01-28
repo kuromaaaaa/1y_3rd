@@ -338,11 +338,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400326, guid: 8f0565f23a2b58541a475bd3c1393052, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 22.89
+      value: 2.8
       objectReference: {fileID: 0}
     - target: {fileID: 400326, guid: 8f0565f23a2b58541a475bd3c1393052, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.31
+      value: 1.24
       objectReference: {fileID: 0}
     - target: {fileID: 400326, guid: 8f0565f23a2b58541a475bd3c1393052, type: 3}
       propertyPath: m_LocalPosition.z
@@ -823,7 +823,7 @@ GameObject:
   - component: {fileID: 583241048}
   - component: {fileID: 583241047}
   m_Layer: 0
-  m_Name: Ground (3)
+  m_Name: Left
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1005,7 +1005,7 @@ GameObject:
   - component: {fileID: 647862665}
   - component: {fileID: 647862664}
   m_Layer: 0
-  m_Name: Ground (1)
+  m_Name: Back
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1127,6 +1127,7 @@ MonoBehaviour:
   _2Pcolli: {fileID: 328908267}
   _syoryuColli: {fileID: 1213162528}
   _throwColli: {fileID: 1492177241}
+  _throwEndDistance: -1
 --- !u!114 &721305119
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1139,7 +1140,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58c02caf1cb45e546b9ebfdc36464421, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _throwEndDistance: -2
+  _throwEndDistance: 2.5
+  _throwDamage: 100
 --- !u!114 &721305120
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1153,6 +1155,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _maxPlayerHP: 1000
+  _flip: 0
 --- !u!114 &721305121
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1763,7 +1766,7 @@ GameObject:
   - component: {fileID: 949769611}
   - component: {fileID: 949769610}
   m_Layer: 0
-  m_Name: Ground (2)
+  m_Name: Right
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2144,6 +2147,7 @@ MonoBehaviour:
   _2Pcolli: {fileID: 0}
   _syoryuColli: {fileID: 0}
   _throwColli: {fileID: 0}
+  _throwEndDistance: 0
 --- !u!114 &1070137801
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2157,6 +2161,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _throwEndDistance: 0
+  _throwDamage: 0
 --- !u!114 &1070137802
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2170,6 +2175,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _maxPlayerHP: 1000
+  _flip: 0
 --- !u!95 &1070137803
 Animator:
   serializedVersion: 5
@@ -2410,11 +2416,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400326, guid: 8f0565f23a2b58541a475bd3c1393052, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 19.5
+      value: 1.14
       objectReference: {fileID: 0}
     - target: {fileID: 400326, guid: 8f0565f23a2b58541a475bd3c1393052, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.78
+      value: 1.39
       objectReference: {fileID: 0}
     - target: {fileID: 400326, guid: 8f0565f23a2b58541a475bd3c1393052, type: 3}
       propertyPath: m_LocalPosition.z
@@ -3694,6 +3700,8 @@ MonoBehaviour:
   _camPosY: 1.7
   _minCamPos: 2.82
   _maxCamPos: 4.72
+  _throwCamFlame: 71
+  _throwEndDistance: 2.249998
 --- !u!1 &1813039249
 GameObject:
   m_ObjectHideFlags: 0
@@ -3902,6 +3910,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _maxPlayerHP: 1000
+  _flip: 0
 --- !u!114 &1961667721
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3914,7 +3923,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58c02caf1cb45e546b9ebfdc36464421, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _throwEndDistance: -2
+  _throwEndDistance: 2.5
+  _throwDamage: 100
 --- !u!114 &1961667722
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3934,6 +3944,7 @@ MonoBehaviour:
   _2Pcolli: {fileID: 1449921532}
   _syoryuColli: {fileID: 1448825878}
   _throwColli: {fileID: 2020397044}
+  _throwEndDistance: -1
 --- !u!54 &1961667723
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -4031,7 +4042,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2020397044}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1

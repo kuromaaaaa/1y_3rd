@@ -15,6 +15,8 @@ public class GameManager : MonoBehaviour
     GameObject[] _playerArr;
     float _time = 99;
     public GameObject[] PlayerArr { get { return _playerArr; } }
+    CenterPlayers _camPlayerCenter;
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -39,6 +41,7 @@ public class GameManager : MonoBehaviour
         }
         _playerArr[0].GetComponent<PlayerData>().Enemy = _playerArr[1];
         _playerArr[1].GetComponent<PlayerData>().Enemy = _playerArr[0];
+        _camPlayerCenter = GameObject.Find("PlayersCenter").GetComponent<CenterPlayers>();
     }
 
     // Update is called once per frame
@@ -47,6 +50,11 @@ public class GameManager : MonoBehaviour
         _time -= Time.deltaTime;
         int intTime = (int)_time;
         _timeTx.text = (intTime.ToString());
+    }
+
+    public void GMthrow(Vector3 direc)
+    {
+        _camPlayerCenter.throwCam(direc * -1);
     }
 
     public void lose(string player)

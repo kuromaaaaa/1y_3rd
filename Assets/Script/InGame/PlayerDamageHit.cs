@@ -8,6 +8,7 @@ public class PlayerDamageHit : MonoBehaviour
     PlayerData _pdata;
     PlayerDirection _pdirec;
     [SerializeField, Tooltip("“Š‚°Œã‚ÌˆÊ’u")] float _throwEndDistance;
+    [SerializeField] int _throwDamage;
     // Start is called before the first frame update
     void Start()
     {
@@ -52,10 +53,17 @@ public class PlayerDamageHit : MonoBehaviour
         }
     }
 
-    public void throwEnd() 
+    public void thrownEnd() 
     { 
         _rb.isKinematic = false;
         GetComponent<CapsuleCollider>().enabled = true;
+        _pdirec.Stop = false;
         this.transform.position = this.transform.position + _pdirec.PlayerFo * _throwEndDistance;
+        _pdata.Enemy.GetComponent<PlayerData>().Flip = false;
+    }
+
+    public void thrownDamage()
+    {
+        _pdata.MinusHP(_throwDamage);
     }
 }

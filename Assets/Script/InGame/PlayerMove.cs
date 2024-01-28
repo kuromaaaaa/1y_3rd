@@ -71,6 +71,7 @@ public class PlayerMove : MonoBehaviour
             _anim.SetBool("Crouch", _crouch);
         }
     }
+    
     void OnAnimatorMove()
     {
         //transform.position = GetComponent<Animator>().rootPosition;

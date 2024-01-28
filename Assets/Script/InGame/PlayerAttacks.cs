@@ -12,6 +12,7 @@ public class PlayerAttacks : MonoBehaviour
     [SerializeField] GameObject _2Pcolli;
     [SerializeField] GameObject _syoryuColli;
     [SerializeField] GameObject _throwColli;
+    [SerializeField, Tooltip("ìäÇ∞çUåÇå„ÇÃãóó£")] float _throwEndDistance;
     PlayerData _pdata;
     PlayerDirection _pdire;
     Rigidbody _rb;
@@ -167,6 +168,12 @@ public class PlayerAttacks : MonoBehaviour
         _attacking = false;
         _nageKanou = true;
         //_rb.isKinematic = false;
+    }
+    public void throwEnd()
+    {
+        this.transform.position = this.transform.position + (_pdire.ThrowEndFo * _throwEndDistance);
+        _pdata.Flip = true;
+        Debug.Log(_pdire.ThrowEndFo);
     }
 
     public void nageKyan()

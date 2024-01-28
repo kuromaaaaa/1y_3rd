@@ -14,14 +14,17 @@ public class PlayerData : MonoBehaviour
     RectTransform _hpBarRedRtf;
     RectTransform _hpBarBlueRtf;
 
-
     GameObject _gm;
     bool _player1;
-    bool _playerDirecRight;
-    public bool PlayerDirecRight { get { return _playerDirecRight; } }
+    public bool Player1 { set { _player1 = value; } }
     GameObject _enemy;
     public GameObject Enemy { set { _enemy = value; } get { return _enemy; } }
-    public bool Player1 { set { _player1 = value; } }
+    //プレイヤーの位置と向き
+    bool _playerDirecRight;
+    public bool PlayerDirecRight { get { return _playerDirecRight; } }
+    [SerializeField] bool _flip = false;
+    public bool Flip { set { _flip = value; } get { return _flip; } }
+    //ダメージとコンボカウント
     bool _damaging = false;
     public bool Damaging
     {
@@ -56,11 +59,11 @@ public class PlayerData : MonoBehaviour
     {
         if (gameObject.transform.position.x < _enemy.transform.position.x)
         { 
-            _playerDirecRight = true;
+            _playerDirecRight = _flip ? false : true;
         }
         else
         {
-            _playerDirecRight = false;
+            _playerDirecRight = _flip ? true : false;
         }
         if(_nowHp <= 0)
         {
