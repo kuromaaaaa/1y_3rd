@@ -13,6 +13,7 @@ public class PlayerAttacks : MonoBehaviour
     [SerializeField] GameObject _syoryuColli;
     [SerializeField] GameObject _throwColli;
     [SerializeField, Tooltip("ìäÇ∞çUåÇå„ÇÃãóó£")] float _throwEndDistance;
+    [SerializeField] float _aaaa;
     PlayerData _pdata;
     PlayerDirection _pdire;
     Rigidbody _rb;
@@ -22,7 +23,7 @@ public class PlayerAttacks : MonoBehaviour
     public bool Syoryu { get { return _syoryu; } }
     bool _hado = false;
     bool _attacking = false;
-    bool _nageKanou = false;
+    bool _nageKanou = true;
     public bool Attacking { get { return _attacking; } }
     Animator _anim;
     // Start is called before the first frame update
@@ -109,6 +110,7 @@ public class PlayerAttacks : MonoBehaviour
 
     public void PandK()
     {
+        Debug.Log("ìäÇ∞â¬î\" + _nageKanou + " íÖín" + _pdata.IsGround);
         if (_nageKanou && _pdata.IsGround)
         {
             Debug.Log("ìäÇ∞");
@@ -169,15 +171,27 @@ public class PlayerAttacks : MonoBehaviour
         _nageKanou = true;
         //_rb.isKinematic = false;
     }
-    public void throwEnd()
+    public void throwEnd(int hit)
     {
-        this.transform.position = this.transform.position + (_pdire.ThrowEndFo * _throwEndDistance);
-        _pdata.Flip = true;
+        if (hit == 1)
+        {
+            this.transform.position = this.transform.position + (_pdire.ThrowEndFo * _throwEndDistance);
+            _pdata.Flip = true;
+        }
+        else
+        {
+            this.transform.position = this.transform.position + (_pdire.PlayerFo * _throwEndDistance * _aaaa);
+        }
         Debug.Log(_pdire.ThrowEndFo);
     }
 
     public void nageKyan()
     {
         _nageKanou = false;
+    }
+
+    public void nageKanou()
+    {
+        _nageKanou = true;
     }
 }

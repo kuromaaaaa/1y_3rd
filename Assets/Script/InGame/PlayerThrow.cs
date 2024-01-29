@@ -7,9 +7,11 @@ public class PlayerThrow : MonoBehaviour
     [SerializeField] int _CollisionJizoku = 2;
     [SerializeField, Tooltip("ìäÇ∞äJénéûÇÃà íuí≤êÆ")] float _throwStartDistance;
     int _jizoku;
+    bool _hit;
     GameManager _gm;
     private void OnEnable()
     {
+        _hit = false;
         _jizoku = _CollisionJizoku;
     }
     // Start is called before the first frame update
@@ -36,6 +38,7 @@ public class PlayerThrow : MonoBehaviour
     {
         if(other.gameObject.GetComponent<PlayerData>())
         {
+            _hit = true;
             other.gameObject.GetComponent<PlayerDirection>().Stop = true;
             other.GetComponent<Animator>().SetTrigger("thrown");
             transform.parent.gameObject.GetComponent<Animator>().SetTrigger("triggerThrow2");
@@ -44,8 +47,16 @@ public class PlayerThrow : MonoBehaviour
             other.transform.position = other.transform.position + 
                 other.GetComponent<PlayerDirection>().PlayerFo * _throwStartDistance;
             transform.parent.gameObject.GetComponent<PlayerDirection>().ThrowFo();
-            _gm.GMthrow(transform.parent.gameObject.GetComponent<PlayerDirection>().PlayerFo);
+            _gm.GMthrow(transform.parent.gameObject.GetComponent<PlayerDirection>().PlayerFo, true);
             //this.gameObject.GetComponent<Animator>().SetTrigger("triggerThrow");
+        }
+    }
+    private void OnDisable()
+    {
+        Debug.Log(_hit);
+        if (!_hit)
+        {
+            _gm.GMthrow(transform.parent.gameObject.GetComponent<PlayerDirection>().PlayerFo, false);
         }
     }
 }

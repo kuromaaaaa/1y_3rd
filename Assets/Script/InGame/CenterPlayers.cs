@@ -12,9 +12,15 @@ public class CenterPlayers : MonoBehaviour
     [SerializeField] float _minCamPos;
     [SerializeField] float _maxCamPos;
 
-    [SerializeField] int _throwCamFlame = 60;
     int _nowFlame = 0;
-    [SerializeField] float _throwEndDistance = 1;
+    [SerializeField] int _throwHitCamFlame = 71;
+    [SerializeField] float _throwHitEndDistance = 2.249998f;
+
+    [SerializeField] int _throwSukaCamFlame = 60;
+    [SerializeField] float _throwSukaEndDistance = 0;
+
+    int _camFlame;
+
     Vector3 _moveParFlame;
     bool _throwing = false;
 
@@ -26,9 +32,18 @@ public class CenterPlayers : MonoBehaviour
         _player2 = GM.GetComponent<GameManager>().PlayerArr[1];
     }
 
-    public void throwCam(Vector3 direc)
+    public void throwCam(Vector3 direc , bool hit)
     {
-        _moveParFlame = (direc * _throwEndDistance) / _throwCamFlame;
+        if (hit)
+        {
+            _camFlame = _throwHitCamFlame;
+            _moveParFlame = (direc * _throwHitEndDistance) / _camFlame;
+        }
+        else
+        {
+            _camFlame = _throwSukaCamFlame;
+            _moveParFlame = (direc * _throwSukaEndDistance) / _camFlame;
+        }
         Debug.Log(_moveParFlame);
         _nowFlame = 0;
         _throwing = true;
@@ -41,7 +56,7 @@ public class CenterPlayers : MonoBehaviour
             _nowFlame++;
             this.transform.position += _moveParFlame;
             Camera.main.transform.position += _moveParFlame;
-            if (_nowFlame > _throwCamFlame)
+            if (_nowFlame > _camFlame)
             {
                 _throwing = false;
             }

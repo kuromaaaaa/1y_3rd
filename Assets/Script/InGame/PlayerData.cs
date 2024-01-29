@@ -96,4 +96,14 @@ public class PlayerData : MonoBehaviour
             _isGround = false;
         }
     }
+
+    public void mutekiOn()
+    {
+        this.gameObject.layer = 6;
+    }
+
+    public void mutekiOff()
+    {
+        this.gameObject.layer = 0;
+    }
 }

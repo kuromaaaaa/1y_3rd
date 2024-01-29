@@ -52,9 +52,9 @@ public class GameManager : MonoBehaviour
         _timeTx.text = (intTime.ToString());
     }
 
-    public void GMthrow(Vector3 direc)
+    public void GMthrow(Vector3 direc ,bool hit)
     {
-        _camPlayerCenter.throwCam(direc * -1);
+        _camPlayerCenter.throwCam(direc * -1 , hit);
     }
 
     public void lose(string player)
