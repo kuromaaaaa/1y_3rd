@@ -5050,8 +5050,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _movePower: 5
   _backSpeed: 4
-  _jumpPower: 10
-  _JumpHoriPower: 1
+  _jumpPower: 5
+  _JumpHoriPower: 4
 --- !u!136 &1872167325
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -5112,7 +5112,7 @@ MonoBehaviour:
   _movePower: 5
   _backSpeed: 4
   _jumpPower: 5
-  _JumpHoriPower: 1
+  _JumpHoriPower: 4
 --- !u!114 &1961667718
 MonoBehaviour:
   m_ObjectHideFlags: 0

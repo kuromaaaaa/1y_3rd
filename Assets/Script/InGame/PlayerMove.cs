@@ -9,6 +9,7 @@ public class PlayerMove : MonoBehaviour
     [SerializeField] float _backSpeed = 4;
     [SerializeField] float _jumpPower = 1;
     [SerializeField] float _JumpHoriPower = 1;
+    [SerializeField] float _bsSpeed = 1;
     Rigidbody _rb;
     PlayerInput _input;
     PlayerData _pd;
@@ -19,6 +20,7 @@ public class PlayerMove : MonoBehaviour
     public bool IsJump { get { return _isJumping; } }
     bool _isJumpingAir = false;
     Vector3 _jumpDirec;
+    bool _jumpEnemyHit = false;
 
     bool _moveForward;
     bool _moveBack;
@@ -54,6 +56,16 @@ public class PlayerMove : MonoBehaviour
             _moveForward = false;
             _crouch = false;
         }
+        else if ((_input.TenKey == 7 || _input.TenKey == 8 || _input.TenKey == 9)
+                    && !_pd.Damaging && !_pa.Attacking && _pd.IsGround && !_isJumping)
+        {
+            _rb.velocity = new Vector3(0, _rb.velocity.y, 0);
+            _anim.SetTrigger("Jumping");
+            _isJumping = true;
+            _moveBack = false;
+            _moveForward = false;
+            Debug.Log("Jump");
+        }
         else if((_input.TenKey == 1 || _input.TenKey == 2 || _input.TenKey == 3 ) 
                     && !_pd.Damaging && !_pa.Attacking && !_isJumping)
         {
@@ -73,13 +85,6 @@ public class PlayerMove : MonoBehaviour
             _moveBack = false;
             //_crouch = false;
         }
-        if((_input.TenKey == 7 || _input.TenKey == 8 || _input.TenKey == 9) 
-            && !_pd.Damaging && !_pa.Attacking && _pd.IsGround && !_isJumping)
-        {
-            _anim.SetTrigger("Jumping");
-            _isJumping = true;
-            Debug.Log("Jump");
-        }
         if(_anim)
         {
             _anim.SetBool("MoveForward", _moveForward);
@@ -87,25 +92,44 @@ public class PlayerMove : MonoBehaviour
             _anim.SetBool("Crouch", _crouch);
         }
 
-        if(_isJumpingAir)
+        if(_isJumpingAir && !_jumpEnemyHit)
         {
             _rb.velocity = new Vector3(_jumpDirec.x * _JumpHoriPower,_rb.velocity.y ,0);
         }
+
+        if (_input.BackStep)
+        {
+            _rb.velocity = _direction * -1 * _bsSpeed;
+        }
     }
-    
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.GetComponent<PlayerData>())
+            _jumpEnemyHit = true;
+    }
+    private void OnCollisionExit(Collision collision) 
+    { 
+        if(collision.gameObject.GetComponent<PlayerData>())
+            _jumpEnemyHit = false;
+    }
+
     public void jumpStartDistance()
     {
         _rb.AddForce(Vector3.up * _jumpPower, ForceMode.Impulse);
         if (_input.TenKey % 3 == 0)//前ジャンプ
         {
+            //_rb.AddForce((Vector3.up + _direction) * _jumpPower, ForceMode.Impulse);
             _jumpDirec = _direction;
         }
         else if (_input.TenKey % 3 == 2)//垂直
         {
+            //_rb.AddForce(Vector3.up * _jumpPower, ForceMode.Impulse);
             _jumpDirec = Vector3.zero;
         }
         else //後ろジャンプ
         {
+            //_rb.AddForce((Vector3.up + _direction * -1) * _jumpPower, ForceMode.Impulse);
             _jumpDirec = _direction * -1;
         }
         _isJumpingAir = true;
@@ -116,7 +140,7 @@ public class PlayerMove : MonoBehaviour
         _isJumping = false;
         _isJumpingAir = false;
     }
-
+    
     void OnAnimatorMove()
     {
         //transform.position = GetComponent<Animator>().rootPosition;

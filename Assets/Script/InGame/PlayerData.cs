@@ -13,6 +13,7 @@ public class PlayerData : MonoBehaviour
     float _hpImageMaxSize;
     RectTransform _hpBarRedRtf;
     RectTransform _hpBarBlueRtf;
+    Animator _anim;
 
     GameObject _gm;
     bool _player1;
@@ -52,6 +53,7 @@ public class PlayerData : MonoBehaviour
             _hpImageMaxSize = _hpBarBlueRtf.sizeDelta.x;
         }
         _gm = GameObject.Find("GameManager");
+        _anim = GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -73,6 +75,7 @@ public class PlayerData : MonoBehaviour
         if(!_damaging || _nowHp <= 0)
         _hpBarRedRtf.sizeDelta = new Vector2(_hpImageMaxSize * (1.0f * _nowHp / _maxPlayerHP), _hpBarRedRtf.sizeDelta.y);
         //_nowHp / _maxPlayerHP;
+        _anim.SetBool("IsGround",_isGround);
     }
 
     public void MinusHP(int minus)
