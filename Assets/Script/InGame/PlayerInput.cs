@@ -16,17 +16,11 @@ public class PlayerInput : MonoBehaviour
     float _h, _v;
     bool _1P = false;
 
-    bool _backStep;
-    public bool BackStep { get { return _backStep; } set { _backStep = value; } }
     PlayerAttacks _pa;
-    PlayerData _pdata;
-    Animator _anim;
     // Start is called before the first frame update
     void Start()
     {
         _pa = GetComponent<PlayerAttacks>();
-        _pdata = GetComponent<PlayerData>();
-        _anim = GetComponent<Animator>();
         if (this.gameObject.tag == "Player1")
             _1P = true;
     }
@@ -104,21 +98,6 @@ public class PlayerInput : MonoBehaviour
         {
             _pa.pressK(_tenKey);
         }
-
-        if(TenKey == 4 && !_pa.Attacking)
-        {
-            ListSimple();
-            if(_simpleList.Count > 3)
-            {
-                if (_simpleList[_simpleList.Count - 1] == 4 && _simpleList[_simpleList.Count - 2] == 5 
-                    && _simpleList[_simpleList.Count - 3] == 4 && _pdata.IsGround)
-                {
-                    _backStep = true;
-                    _pa.Attacking = true;
-                }
-            }
-        }
-        _anim.SetBool("BackStep", _backStep);
     }
 
     void FixedUpdate()

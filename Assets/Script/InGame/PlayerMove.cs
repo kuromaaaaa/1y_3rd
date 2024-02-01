@@ -9,7 +9,6 @@ public class PlayerMove : MonoBehaviour
     [SerializeField] float _backSpeed = 4;
     [SerializeField] float _jumpPower = 1;
     [SerializeField] float _JumpHoriPower = 1;
-    [SerializeField] float _bsSpeed = 1;
     Rigidbody _rb;
     PlayerInput _input;
     PlayerData _pd;
@@ -96,11 +95,6 @@ public class PlayerMove : MonoBehaviour
         {
             _rb.velocity = new Vector3(_jumpDirec.x * _JumpHoriPower,_rb.velocity.y ,0);
         }
-
-        if (_input.BackStep)
-        {
-            _rb.velocity = _direction * -1 * _bsSpeed;
-        }
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -133,6 +127,7 @@ public class PlayerMove : MonoBehaviour
             _jumpDirec = _direction * -1;
         }
         _isJumpingAir = true;
+        _pd.CollisionHitGround = false;
     }
 
     public void JumpEnd()
@@ -141,6 +136,11 @@ public class PlayerMove : MonoBehaviour
         _isJumpingAir = false;
     }
     
+    public void RbVelocityZero()
+    {
+        _rb.velocity = Vector3.zero;
+    }
+
     void OnAnimatorMove()
     {
         //transform.position = GetComponent<Animator>().rootPosition;

@@ -176,11 +176,6 @@ public class PlayerAttacks : MonoBehaviour
         //_rb.isKinematic = false;
     }
 
-    public void bsEnd()
-    {
-        _input.BackStep = false;
-    }
-
     public void throwEnd(int hit)
     {
         if (hit == 1)

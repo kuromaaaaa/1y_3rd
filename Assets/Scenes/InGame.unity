@@ -1150,7 +1150,7 @@ MonoBehaviour:
   _CollisionJizoku: 2
   _damage: 100
   _air: 1
-  _huttobi: {x: 10, y: 10, z: 0}
+  _huttobi: {x: 3, y: 5, z: 0}
 --- !u!1 &758100321
 GameObject:
   m_ObjectHideFlags: 0
@@ -1511,7 +1511,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _CollisionJizoku: 2
   _damage: 100
-  _air: 1
+  _air: 0
   _huttobi: {x: 10, y: 10, z: 0}
 --- !u!65 &827258459
 BoxCollider:
@@ -2070,7 +2070,6 @@ MonoBehaviour:
   _syoryuColli: {fileID: 0}
   _throwColli: {fileID: 0}
   _throwEndDistance: 0
-  _aaaa: 0
 --- !u!114 &1070137801
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4016,7 +4015,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _CollisionJizoku: 2
   _damage: 100
-  _air: 1
+  _air: 0
   _huttobi: {x: 10, y: 10, z: 0}
 --- !u!65 &1813039251
 BoxCollider:
@@ -4981,7 +4980,6 @@ MonoBehaviour:
   _syoryuColli: {fileID: 2037661562}
   _throwColli: {fileID: 355979646}
   _throwEndDistance: -1
-  _aaaa: 1
 --- !u!114 &1872167320
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5187,7 +5185,6 @@ MonoBehaviour:
   _syoryuColli: {fileID: 1448825878}
   _throwColli: {fileID: 2020397044}
   _throwEndDistance: -1
-  _aaaa: 1
 --- !u!54 &1961667723
 Rigidbody:
   m_ObjectHideFlags: 0

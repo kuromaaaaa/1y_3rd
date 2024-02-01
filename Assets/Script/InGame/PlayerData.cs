@@ -36,6 +36,8 @@ public class PlayerData : MonoBehaviour
     public int IsComboCount { set { _isComboedCount = value; } get { return _isComboedCount; } }
     bool _isGround = false;
     public bool IsGround { get { return _isGround; } }
+    bool _collisionHitGround = false;
+    public bool CollisionHitGround { set { _collisionHitGround = value; }}
     // Start is called before the first frame update
     void Start()
     {
@@ -76,6 +78,7 @@ public class PlayerData : MonoBehaviour
         _hpBarRedRtf.sizeDelta = new Vector2(_hpImageMaxSize * (1.0f * _nowHp / _maxPlayerHP), _hpBarRedRtf.sizeDelta.y);
         //_nowHp / _maxPlayerHP;
         _anim.SetBool("IsGround",_isGround);
+        _anim.SetBool("CollisionHitGround", _collisionHitGround);
     }
 
     public void MinusHP(int minus)
@@ -83,20 +86,23 @@ public class PlayerData : MonoBehaviour
         _nowHp -= minus;
     }
 
+    public void tyakuti()
+    {
+        _isGround = true;
+        _damaging = false;
+        _isComboedCount = 0;
+    }
+
+    public void isGround_false()
+    {
+        _isGround = false;
+    }
+
     private void OnCollisionEnter(Collision collision)
     {
         if(collision.gameObject.tag == "Ground")
         {
-            _isGround = true;
-            _damaging = false;
-            _isComboedCount = 0;
-        }
-    }
-    private void OnCollisionExit(Collision collision)
-    {
-        if(collision.gameObject.tag == "Ground")
-        {
-            _isGround = false;
+            _collisionHitGround = true;
         }
     }
 
