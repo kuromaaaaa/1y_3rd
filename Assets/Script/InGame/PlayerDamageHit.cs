@@ -38,24 +38,34 @@ public class PlayerDamageHit : MonoBehaviour
             _rb.AddForce(_pdirec.PlayerFo * -1);
             _anim.SetTrigger("Guard");
         }
-        else if(air)
-        {
+        else if(air || !_pdata.CollisionHitGround)
+        {//êÅÇ´îÚÇŒÇµÇ‡ÇµÇ≠ÇÕãÛíÜÉqÉbÉg
+            _pdata.ComboCount++;
             _pdata.CollisionHitGround = false;
             _anim.SetTrigger("DamageAir");
             _rb.AddForce(direc,ForceMode.Impulse);
             _pdata.MinusHP(damage);
             _pdata.Damaging = true;
-            _pdata.IsComboCount++;
-            Debug.Log(_pdata.IsComboCount);
+            Debug.Log(_pdata.ComboCount);
         }
         else
-        {
+        {//ínè„Ç†ÇΩÇË
+            _pdata.ComboCount++;
+            if (_pdata.ComboCount == 3)
+            {
+                _anim.SetTrigger("DamageAir");
+                _rb.AddForce(direc, ForceMode.Impulse);
+            }
             _anim.SetTrigger("DamageGrouond");
-            _rb.AddForce(_pdirec.PlayerFo * -1,ForceMode.Impulse);
+            _rb.AddForce(_pdirec.PlayerFo * -2,ForceMode.Impulse);
             _pdata.MinusHP(damage);
             _pdata.Damaging = true;
-            _pdata.IsComboCount++;
-            Debug.Log(_pdata.IsComboCount);
+            Debug.Log(_pdata.ComboCount);
+        }
+
+        if (_pdata.ComboCount == 3)
+        {
+            _pdata.mutekiOn();
         }
     }
 

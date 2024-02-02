@@ -32,12 +32,12 @@ public class PlayerData : MonoBehaviour
         set { _damaging = value; }
         get { return _damaging; }
     }
-    int _isComboedCount = 0;
-    public int IsComboCount { set { _isComboedCount = value; } get { return _isComboedCount; } }
+    int _comboedCount = 0;
+    public int ComboCount { set { _comboedCount = value; } get { return _comboedCount; } }
     bool _isGround = false;
     public bool IsGround { get { return _isGround; } }
     bool _collisionHitGround = false;
-    public bool CollisionHitGround { set { _collisionHitGround = value; }}
+    public bool CollisionHitGround { set { _collisionHitGround = value; } get { return _collisionHitGround; } }
     // Start is called before the first frame update
     void Start()
     {
@@ -90,7 +90,7 @@ public class PlayerData : MonoBehaviour
     {
         _isGround = true;
         _damaging = false;
-        _isComboedCount = 0;
+        _comboedCount = 0;
     }
 
     public void isGround_false()

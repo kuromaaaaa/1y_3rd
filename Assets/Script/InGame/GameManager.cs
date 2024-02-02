@@ -16,6 +16,9 @@ public class GameManager : MonoBehaviour
     float _time = 99;
     public GameObject[] PlayerArr { get { return _playerArr; } }
     CenterPlayers _camPlayerCenter;
+
+    [SerializeField] Transform _rightWallThrowPosi;
+    [SerializeField] Transform _leftWallThrowPosi;
     
     // Start is called before the first frame update
     void Start()
@@ -42,6 +45,8 @@ public class GameManager : MonoBehaviour
         _playerArr[0].GetComponent<PlayerData>().Enemy = _playerArr[1];
         _playerArr[1].GetComponent<PlayerData>().Enemy = _playerArr[0];
         _camPlayerCenter = GameObject.Find("PlayersCenter").GetComponent<CenterPlayers>();
+        _player1.GetComponent<Outline>().OutlineColor = new Color(0f, 1f, 0.55f, 1f);
+        _player2.GetComponent<Outline>().OutlineColor = new Color(1f, 1f, 0f, 1f);
     }
 
     // Update is called once per frame
@@ -52,9 +57,34 @@ public class GameManager : MonoBehaviour
         _timeTx.text = (intTime.ToString());
     }
 
-    public void GMthrow(Vector3 direc ,bool hit)
+    public void GMthrow(Vector3 direc ,bool hit ,Vector3 pos)
     {
-        _camPlayerCenter.throwCam(direc * -1 , hit);
+        direc *= -1;
+        Vector3 playertoWallPos;
+        if(hit && _rightWallThrowPosi.position.x < pos.x && direc.x > 0)
+        {
+            playertoWallPos = new Vector3(_rightWallThrowPosi.position.x - pos.x, 0, 0);
+            Debug.Log(playertoWallPos);
+            foreach (GameObject player in PlayerArr)
+            {
+                player.GetComponent<PlayerMove>().ThrowWallMove(playertoWallPos);
+            }
+        }
+        else if(hit && _leftWallThrowPosi.position.x > pos.x && direc.x < 0)
+        {
+            playertoWallPos = new Vector3(_leftWallThrowPosi.position.x - pos.x, 0, 0);
+            Debug.Log(playertoWallPos);
+            foreach (GameObject player in PlayerArr)
+            {
+                player.GetComponent<PlayerMove>().ThrowWallMove(playertoWallPos);
+            }
+        }
+        else
+        {
+            playertoWallPos = Vector3.zero;
+        }
+        Debug.Log(direc);
+        _camPlayerCenter.throwCam(direc, playertoWallPos, hit);
     }
 
     public void lose(string player)

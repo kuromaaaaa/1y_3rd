@@ -38,25 +38,29 @@ public class PlayerThrow : MonoBehaviour
     {
         if(other.gameObject.GetComponent<PlayerData>())
         {
-            _hit = true;
-            other.gameObject.GetComponent<PlayerDirection>().Stop = true;
-            other.GetComponent<Animator>().SetTrigger("thrown");
-            transform.parent.gameObject.GetComponent<Animator>().SetTrigger("triggerThrow2");
-            other.GetComponent<CapsuleCollider>().enabled = false;
-            other.GetComponent<Rigidbody>().isKinematic = true;
-            other.transform.position = other.transform.position + 
-                other.GetComponent<PlayerDirection>().PlayerFo * _throwStartDistance;
-            transform.parent.gameObject.GetComponent<PlayerDirection>().ThrowFo();
-            _gm.GMthrow(transform.parent.gameObject.GetComponent<PlayerDirection>().PlayerFo, true);
-            //this.gameObject.GetComponent<Animator>().SetTrigger("triggerThrow");
+            PlayerData pData = other.GetComponent<PlayerData>();
+            PlayerDirection pDirec = other.GetComponent<PlayerDirection>();
+            if (pData.IsGround && !pData.Damaging)
+            {
+                _hit = true;
+                pDirec.Stop = true;
+                other.GetComponent<Animator>().SetTrigger("thrown");
+                transform.parent.gameObject.GetComponent<Animator>().SetTrigger("triggerThrow2");
+                other.GetComponent<CapsuleCollider>().enabled = false;
+                other.GetComponent<Rigidbody>().isKinematic = true;
+                other.transform.position = other.transform.position +
+                    pDirec.PlayerFo * _throwStartDistance;
+                transform.parent.gameObject.GetComponent<PlayerDirection>().ThrowFo();
+                _gm.GMthrow(transform.parent.gameObject.GetComponent<PlayerDirection>().PlayerFo, true ,this.transform.position);
+                //this.gameObject.GetComponent<Animator>().SetTrigger("triggerThrow");
+            }
         }
     }
     private void OnDisable()
     {
-        Debug.Log(_hit);
         if (!_hit)
         {
-            _gm.GMthrow(transform.parent.gameObject.GetComponent<PlayerDirection>().PlayerFo, false);
+            _gm.GMthrow(transform.parent.gameObject.GetComponent<PlayerDirection>().PlayerFo, false,this.transform.position);
         }
     }
 }

@@ -26,6 +26,13 @@ public class PlayerMove : MonoBehaviour
     bool _crouch;
     Vector3 _direction;
 
+    bool _vecZero = false;
+    public bool VecZero { set { _vecZero = value; } }
+
+    int _throwMoveTimer = 0;
+    Vector3 _throwVecParFlame;
+    bool _throwMove = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -96,6 +103,27 @@ public class PlayerMove : MonoBehaviour
             _rb.velocity = new Vector3(_jumpDirec.x * _JumpHoriPower,_rb.velocity.y ,0);
         }
     }
+
+    public void ThrowWallMove(Vector3 PtoWallPos)
+    {
+        _throwVecParFlame = PtoWallPos / 71;
+        _throwMoveTimer = 0;
+        _throwMove = true;
+    }
+
+    private void FixedUpdate()
+    {
+        if(_throwMove)
+        {
+            _throwMoveTimer++;
+            this.transform.position += _throwVecParFlame;
+            if(_throwMoveTimer > 71)
+            {
+                _throwMove = false;
+            }
+        }
+    }
+
 
     private void OnCollisionEnter(Collision collision)
     {

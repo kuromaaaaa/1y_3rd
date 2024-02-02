@@ -32,12 +32,12 @@ public class CenterPlayers : MonoBehaviour
         _player2 = GM.GetComponent<GameManager>().PlayerArr[1];
     }
 
-    public void throwCam(Vector3 direc , bool hit)
+    public void throwCam(Vector3 direc, Vector3 throwPos , bool hit)
     {
         if (hit)
         {
             _camFlame = _throwHitCamFlame;
-            _moveParFlame = (direc * _throwHitEndDistance) / _camFlame;
+            _moveParFlame = (direc * _throwHitEndDistance + throwPos) / _camFlame;
         }
         else
         {
@@ -60,7 +60,6 @@ public class CenterPlayers : MonoBehaviour
             {
                 _throwing = false;
             }
-
         }
     }
 

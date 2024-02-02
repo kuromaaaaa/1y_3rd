@@ -12,13 +12,14 @@ public class PlayerAttacks : MonoBehaviour
     [SerializeField] GameObject _2Pcolli;
     [SerializeField] GameObject _syoryuColli;
     [SerializeField] GameObject _throwColli;
+    [SerializeField] GameObject _AirKcolli;
     [SerializeField, Tooltip("ìäÇ∞çUåÇå„ÇÃãóó£")] float _throwEndDistance;
     //[SerializeField] float _aaaa;
 
     PlayerData _pdata;
     PlayerDirection _pdire;
     Rigidbody _rb;
-    PlayerInput _input;
+    PlayerMove _pmove;
 
     bool _syoryu = false;
     bool _syoryuMove = false;
@@ -28,6 +29,8 @@ public class PlayerAttacks : MonoBehaviour
     bool _attacking = false;
     bool _nageKanou = true;
     public bool Attacking { get { return _attacking; } set { _attacking = value; } }
+    bool _cancelCommandAttack = false;
+    public bool CancelCommandAttack { get { return _cancelCommandAttack; } }
     Animator _anim;
     // Start is called before the first frame update
     void Start()
@@ -36,7 +39,7 @@ public class PlayerAttacks : MonoBehaviour
         _pdire = GetComponent<PlayerDirection>();
         _anim = GetComponent<Animator>();
         _rb = GetComponent<Rigidbody>();
-        _input = GetComponent<PlayerInput>();
+        _pmove = GetComponent<PlayerMove>();
     }
 
     // Update is called once per frame
@@ -50,7 +53,7 @@ public class PlayerAttacks : MonoBehaviour
 
     public void syoryuHassei()
     {
-        if (!_attacking && _pdata.IsGround)
+        if ((!_attacking && _pdata.IsGround) || _cancelCommandAttack)
         {
             Debug.Log("è∏ó≥");
             _anim.SetTrigger("triggerSyoryu");
@@ -72,7 +75,7 @@ public class PlayerAttacks : MonoBehaviour
 
     public void hadoHassei()
     {
-        if (!_attacking && _pdata.IsGround)
+        if ((!_attacking && _pdata.IsGround) || _cancelCommandAttack)
         {
             Debug.Log("îgìÆ");
             _anim.SetTrigger("triggerHado");
@@ -83,13 +86,13 @@ public class PlayerAttacks : MonoBehaviour
 
     public void pressP(int tenKey)
     {
-        if (!_attacking && (tenKey == 1 || tenKey == 2 || tenKey == 3) && _pdata.IsGround)
+        if (!_attacking && (tenKey == 1 || tenKey == 2 || tenKey == 3) && _pdata.IsGround && !_pdata.Damaging)
         {
             Debug.Log("2P");
             _anim.SetTrigger("trigger2P");
             _attacking = true;
         }
-        else if (!_attacking && _pdata.IsGround)
+        else if (!_attacking && _pdata.IsGround && !_pdata.Damaging)
         {
             Debug.Log("5P");
             _anim.SetTrigger("trigger5P");
@@ -98,13 +101,13 @@ public class PlayerAttacks : MonoBehaviour
     }
     public void pressK(int tenKey)
     {
-        if(!_attacking && (tenKey == 1 || tenKey == 2 || tenKey == 3) && _pdata.IsGround)
+        if(!_attacking && (tenKey == 1 || tenKey == 2 || tenKey == 3) && _pdata.IsGround && !_pdata.Damaging)
         {
             Debug.Log("2K");
             _anim.SetTrigger("trigger2K");
             _attacking = true;
         }
-        else if(!_attacking && _pdata.IsGround)
+        else if(!_attacking && _pdata.IsGround && !_pdata.Damaging)
         {
             Debug.Log("5K");
             _anim.SetTrigger("trigger5K");
@@ -114,7 +117,6 @@ public class PlayerAttacks : MonoBehaviour
 
     public void PandK()
     {
-        Debug.Log("ìäÇ∞â¬î\" + _nageKanou + " íÖín" + _pdata.IsGround);
         if (_nageKanou && _pdata.IsGround)
         {
             Debug.Log("ìäÇ∞");
@@ -149,6 +151,11 @@ public class PlayerAttacks : MonoBehaviour
         _throwColli.SetActive(true);
     }
 
+    public void AirK()
+    {
+        _AirKcolli.SetActive(true);
+    }
+
 
     public void hado()
     {
@@ -173,6 +180,7 @@ public class PlayerAttacks : MonoBehaviour
         _hado = false;
         _attacking = false;
         _nageKanou = true;
+        _syoryuMove = false;
         //_rb.isKinematic = false;
     }
 
@@ -187,15 +195,25 @@ public class PlayerAttacks : MonoBehaviour
         {
             this.transform.position = this.transform.position + (_pdire.PlayerFo * _throwEndDistance);
         }
-        Debug.Log(_pdire.ThrowEndFo);
     }
 
-    public void nageKyan()
+    void CanCommandCancel()
+    {
+        _cancelCommandAttack = true;
+    }
+
+    void CantCommandCancel()
+    {
+        _cancelCommandAttack = false;
+    }
+
+
+    public void NageKyan()
     {
         _nageKanou = false;
     }
 
-    public void nageKanou()
+    public void NageKanou()
     {
         _nageKanou = true;
     }

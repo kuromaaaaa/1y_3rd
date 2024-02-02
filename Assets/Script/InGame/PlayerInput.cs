@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class PlayerInput : MonoBehaviour
 {
-    [SerializeField] float _controllerDeadZone = 0.5f;
+    [SerializeField] float _controllerDeadZone = 0.4f;
     [SerializeField] int _nyuryokuYuyo = 20;
     List<int> _allNyuryokuList = new List<int>();
     List<int> _simpleList = new List<int>();
@@ -17,10 +17,12 @@ public class PlayerInput : MonoBehaviour
     bool _1P = false;
 
     PlayerAttacks _pa;
+    Animator _anim;
     // Start is called before the first frame update
     void Start()
     {
         _pa = GetComponent<PlayerAttacks>();
+        _anim = GetComponent<Animator>();
         if (this.gameObject.tag == "Player1")
             _1P = true;
     }
@@ -75,8 +77,8 @@ public class PlayerInput : MonoBehaviour
                     _pa.syoryuHassei();
                 }
             }
-            if (!_pa.Attacking &&((_simpleList.Count > 2 && _simpleList[_simpleList.Count - 1] == 6 && _simpleList[_simpleList.Count - 2] == 3 && _simpleList[_simpleList.Count - 3] == 2)
-                || (_simpleList.Count > 3 && _simpleList[_simpleList.Count - 2] == 6 && _simpleList[_simpleList.Count - 3] == 3 && _simpleList[_simpleList.Count - 4] == 2)))
+            if ((_simpleList.Count > 2 && _simpleList[_simpleList.Count - 1] == 6 && _simpleList[_simpleList.Count - 2] == 3 && _simpleList[_simpleList.Count - 3] == 2)
+                || (_simpleList.Count > 3 && _simpleList[_simpleList.Count - 2] == 6 && _simpleList[_simpleList.Count - 3] == 3 && _simpleList[_simpleList.Count - 4] == 2))
             {//”g“®Œ
                 _pa.hadoHassei();
             }
@@ -98,6 +100,8 @@ public class PlayerInput : MonoBehaviour
         {
             _pa.pressK(_tenKey);
         }
+
+        _anim.SetBool("PorK", jakuP || kyouK);
     }
 
     void FixedUpdate()
@@ -115,16 +119,25 @@ public class PlayerInput : MonoBehaviour
         {
             _h += Input.GetAxisRaw("c1_axisX") > _controllerDeadZone ? 1 : 0;
             _h += Input.GetAxisRaw("c1_axisX") < _controllerDeadZone * -1 ? -1 : 0;
+            _h += Input.GetAxis("c1_crossHori");
             _v += Input.GetAxisRaw("c1_axisY") > _controllerDeadZone ? 1 : 0;
             _v += Input.GetAxisRaw("c1_axisY") < _controllerDeadZone * -1 ? -1 : 0;
+            _v += Input.GetAxis("c1_crossVert");
         }
         else
         {
             _h += Input.GetAxisRaw("c2_axisX") > _controllerDeadZone ? 1 : 0;
             _h += Input.GetAxisRaw("c2_axisX") < _controllerDeadZone * -1 ? -1 : 0;
+            _h += Input.GetAxisRaw("c2_crossHori");
             _v += Input.GetAxisRaw("c2_axisY") > _controllerDeadZone ? 1 : 0;
             _v += Input.GetAxisRaw("c2_axisY") < _controllerDeadZone * -1 ? -1 : 0;
+            _v += Input.GetAxisRaw("c2_crossVert");
         }
+
+        if (_h > 0) _h = 1;
+        if (_h < 0) _h = -1;
+        if (_v > 0) _v = 1;
+        if (_v < 0) _v = -1;
 
         if (_1pPlayer)
         {

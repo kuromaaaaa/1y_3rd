@@ -5,6 +5,9 @@ using UnityEngine;
 
 public class hadoPrefub : MonoBehaviour
 {
+    [SerializeField] int _damage;
+    [SerializeField] Vector3 _direction;
+    [SerializeField] bool Air;
     Rigidbody _rb;
     Vector3 _moveDirection;
     bool _player1Shot;
@@ -36,12 +39,12 @@ public class hadoPrefub : MonoBehaviour
         }
         if (_player1Shot && other.gameObject.tag == "Player2")
         {
-            pdh.DamageHit(60, true, new Vector3(10, 10, 0));
+            pdh.DamageHit(_damage, Air, _direction);
             Destroy(gameObject);
         }
         if (!_player1Shot && other.gameObject.tag == "Player1")
         {
-            pdh.DamageHit(60, true, new Vector3(10, 10, 0));
+            pdh.DamageHit(_damage, Air, _direction);
             Destroy(gameObject);
         }
     }

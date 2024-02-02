@@ -42,7 +42,7 @@ public class PlayerDirection : MonoBehaviour
             }
             Vector3 _playerLook = new Vector3(this.transform.position.x + _playersDirection.normalized.x, this.transform.position.y, this.transform.position.z + (GetComponent<PlayerData>().PlayerDirecRight ? -1 : 1));
             Debug.DrawLine(this.transform.position, _playerLook);
-            if (!_pa.Attacking)
+            if (!_pa.Attacking && !_pdata.Damaging && _pdata.IsGround)
                 transform.LookAt(_playerLook);
             _playerFo = _playersDirection;
             _playerFo.y = 0;

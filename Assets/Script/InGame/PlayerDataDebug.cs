@@ -10,6 +10,7 @@ public class PlayerDataDebug : MonoBehaviour
     [SerializeField] int tenkey;
     [SerializeField] string direction;
     [SerializeField] bool isjamp;
+    [SerializeField] bool •KE‹ZƒLƒƒƒ“ƒZƒ‹;
 
     PlayerMove _pm;
     PlayerInput _pi;
@@ -36,5 +37,6 @@ public class PlayerDataDebug : MonoBehaviour
         if (_pdata.PlayerDirecRight)
             direction = "¨";
         else direction = "©";
+        •KE‹ZƒLƒƒƒ“ƒZƒ‹ = _pa.CancelCommandAttack;
     }
 }
