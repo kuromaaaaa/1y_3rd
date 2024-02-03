@@ -2623,6 +2623,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9112172077591344312, guid: a66d8cf8fba499944992b092f26a6667, type: 3}
+      propertyPath: _hitParticle
+      value: 
+      objectReference: {fileID: 3493937962271553759, guid: 2eb26dc6ee185d8428e25a12da47e7b1, type: 3}
     - target: {fileID: 9112172077591344313, guid: a66d8cf8fba499944992b092f26a6667, type: 3}
       propertyPath: m_Name
       value: hadoPrefub

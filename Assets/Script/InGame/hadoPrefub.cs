@@ -8,6 +8,8 @@ public class hadoPrefub : MonoBehaviour
     [SerializeField] int _damage;
     [SerializeField] Vector3 _direction;
     [SerializeField] bool Air;
+    [SerializeField] Transform _hitParPos;
+    [SerializeField] GameObject _hitParticle;
     Rigidbody _rb;
     Vector3 _moveDirection;
     bool _player1Shot;
@@ -41,11 +43,13 @@ public class hadoPrefub : MonoBehaviour
         if (_player1Shot && other.gameObject.tag == "Player2")
         {
             pdh.DamageHit(_damage, Air, _direction);
+            Instantiate(_hitParticle).transform.position = _hitParPos.position;
             Destroy(gameObject);
         }
         if (!_player1Shot && other.gameObject.tag == "Player1")
         {
             pdh.DamageHit(_damage, Air, _direction);
+            Instantiate(_hitParticle).transform.position = _hitParPos.position;
             Destroy(gameObject);
         }
     }
