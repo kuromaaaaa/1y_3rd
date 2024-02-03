@@ -16,31 +16,49 @@ public class GameManager : MonoBehaviour
     float _time = 99;
     public GameObject[] PlayerArr { get { return _playerArr; } }
     CenterPlayers _camPlayerCenter;
+    GameObject[] _particleArr;
 
     [SerializeField] Transform _rightWallThrowPosi;
     [SerializeField] Transform _leftWallThrowPosi;
     
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         _playerArr = GameObject.FindGameObjectsWithTag("Player");
+        _particleArr = GameObject.FindGameObjectsWithTag("PlayerParticle");
+        PlayerData pdp1;
+        PlayerData pdp2;
+        PlayerParticles parArr1 = _particleArr[0].GetComponent<PlayerParticles>();
+        PlayerParticles parArr2 = _particleArr[1].GetComponent<PlayerParticles>();
         if (_playerArr[0].transform.position.x < _playerArr[1].transform.position.x)
         {
             _playerArr[0].tag = "Player1";
             _playerArr[1].tag = "Player2";
-            _playerArr[0].GetComponent<PlayerData>().Player1 = true;
-            _playerArr[1].GetComponent<PlayerData>().Player1 = false;
+            pdp1 = _playerArr[0].GetComponent<PlayerData>();
+            pdp2 = _playerArr[1].GetComponent<PlayerData>();
+            pdp1.Player1 = true;
+            pdp2.Player1 = false;
             _player1 = _playerArr[0];
             _player2 = _playerArr[1];
+            pdp1.PP = parArr1;
+            pdp2.PP = parArr2;
+            parArr1.Parent = _playerArr[0];
+            parArr2.Parent = _playerArr[1];
         }
         else
         {
             _playerArr[1].tag = "Player1";
             _playerArr[0].tag = "Player2";
-            _playerArr[1].GetComponent<PlayerData>().Player1 = true;
-            _playerArr[0].GetComponent<PlayerData>().Player1 = false;
+            pdp1 = _playerArr[1].GetComponent<PlayerData>();
+            pdp2 = _playerArr[0].GetComponent<PlayerData>();
+            pdp1.Player1 = true;
+            pdp2.Player1 = false;
             _player1 = _playerArr[1];
             _player2 = _playerArr[0];
+            pdp1.PP = parArr1;
+            pdp2.PP = parArr2;
+            parArr1.Parent = _playerArr[1];
+            parArr2.Parent = _playerArr[0];
         }
         _playerArr[0].GetComponent<PlayerData>().Enemy = _playerArr[1];
         _playerArr[1].GetComponent<PlayerData>().Enemy = _playerArr[0];

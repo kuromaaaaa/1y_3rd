@@ -14,6 +14,8 @@ public class PlayerData : MonoBehaviour
     RectTransform _hpBarRedRtf;
     RectTransform _hpBarBlueRtf;
     Animator _anim;
+    PlayerParticles _pp;
+    public PlayerParticles PP { get { return _pp; } set{ _pp = value; } }
 
     GameObject _gm;
     bool _player1;

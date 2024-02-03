@@ -37,6 +37,7 @@ public class PlayerDamageHit : MonoBehaviour
         {
             _rb.AddForce(_pdirec.PlayerFo * -1);
             _anim.SetTrigger("Guard");
+            _pdata.PP.ParticlePlay(4);
         }
         else if(air || !_pdata.CollisionHitGround)
         {//‚«”ò‚Î‚µ‚à‚µ‚­‚Í‹ó’†ƒqƒbƒg

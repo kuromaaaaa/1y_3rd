@@ -28,6 +28,7 @@ public class hadoPrefub : MonoBehaviour
     void Update()
     {
         _rb.velocity = _moveDirection * 10;
+        transform.up = _rb.velocity;
     }
 
     private void OnTriggerEnter(Collider other)

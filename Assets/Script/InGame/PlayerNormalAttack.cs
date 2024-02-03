@@ -9,12 +9,15 @@ public class PlayerNormalAttack : MonoBehaviour
     [SerializeField] int _damage = 0;
     [SerializeField] bool _air;
     [SerializeField] Vector3 _huttobi;
+    [SerializeField] int _particleNumber;
+    PlayerParticles _pp;
     AudioSource _as;
     int _jizoku;
     // Start is called before the first frame update
     void Start()
     {
         _as = GetComponent<AudioSource>();
+        _pp = transform.parent.GetComponent<PlayerData>().PP;
     }
 
     private void OnEnable()
@@ -40,10 +43,13 @@ public class PlayerNormalAttack : MonoBehaviour
         if (other.gameObject.GetComponent<PlayerDamageHit>())
         {
             other.gameObject.GetComponent<PlayerDamageHit>().DamageHit(_damage, _air, _huttobi);
-            Debug.Log("hit");
             if (_as)
             {
                 _as.Play();
+            }
+            if(_pp)
+            {
+                _pp.ParticlePlay(_particleNumber);
             }
         }
     }
