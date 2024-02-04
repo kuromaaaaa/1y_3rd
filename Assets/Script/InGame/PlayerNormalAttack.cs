@@ -10,6 +10,7 @@ public class PlayerNormalAttack : MonoBehaviour
     [SerializeField] bool _air;
     [SerializeField] Vector3 _huttobi;
     [SerializeField] int _particleNumber;
+    [SerializeField] int _audioNumber;
     PlayerParticles _pp;
     AudioSource _as;
     int _jizoku;
@@ -49,7 +50,7 @@ public class PlayerNormalAttack : MonoBehaviour
             }
             if(_pp)
             {
-                _pp.ParticlePlay(_particleNumber);
+                _pp.ParticlePlay(_particleNumber,_audioNumber);
             }
         }
     }

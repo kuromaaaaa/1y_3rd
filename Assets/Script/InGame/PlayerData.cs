@@ -15,6 +15,10 @@ public class PlayerData : MonoBehaviour
     RectTransform _hpBarBlueRtf;
     Animator _anim;
     PlayerParticles _pp;
+    AudioSource _as;
+    PlayerDirection _pdirec;
+    Rigidbody _rb;
+    ResultScoreDDOL _rsDDOL;
     public PlayerParticles PP { get { return _pp; } set{ _pp = value; } }
 
     GameObject _gm;
@@ -58,6 +62,18 @@ public class PlayerData : MonoBehaviour
         }
         _gm = GameObject.Find("GameManager");
         _anim = GetComponent<Animator>();
+        _as = GetComponent<AudioSource>();
+        _pdirec = GetComponent<PlayerDirection>();
+        _rb = GetComponent<Rigidbody>();
+        _rsDDOL = GameObject.Find("resultScore").GetComponent<ResultScoreDDOL>();
+        if (_player1)
+        {
+            _rsDDOL.P1HP = _maxPlayerHP;
+        }
+        else
+        {
+            _rsDDOL.P2HP = _maxPlayerHP;
+        }
     }
 
     // Update is called once per frame
@@ -71,10 +87,6 @@ public class PlayerData : MonoBehaviour
         {
             _playerDirecRight = _flip ? true : false;
         }
-        if(_nowHp <= 0)
-        {
-            _gm.GetComponent<GameManager>().lose(gameObject.tag);
-        }
         _hpBarBlueRtf.sizeDelta = new Vector2(_hpImageMaxSize * (1.0f * _nowHp / _maxPlayerHP),_hpBarBlueRtf.sizeDelta.y);
         if(!_damaging || _nowHp <= 0)
         _hpBarRedRtf.sizeDelta = new Vector2(_hpImageMaxSize * (1.0f * _nowHp / _maxPlayerHP), _hpBarRedRtf.sizeDelta.y);
@@ -85,7 +97,25 @@ public class PlayerData : MonoBehaviour
 
     public void MinusHP(int minus)
     {
+        bool zeroUp = (_nowHp > 0 ? true:false );
         _nowHp -= minus;
+        if(_player1)
+        {
+            _rsDDOL.P1HP = _nowHp;
+        }
+        else
+        {
+            _rsDDOL.P2HP = _nowHp;
+        }
+        if (_nowHp <= 0 && zeroUp)
+        {
+            _gm.GetComponent<GameManager>().lose(gameObject.tag);
+            _as.Play();
+            _anim.SetTrigger("DEAD");
+            _rb.velocity = Vector3.zero;
+            _rb.AddForce(new Vector3(_pdirec.PlayerFo.x * -1,1,0));
+            Time.timeScale = 0.5f;
+        }
     }
 
     public void tyakuti()

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using static UnityEditor.Experimental.GraphView.GraphView;
 
@@ -17,6 +18,10 @@ public class GameManager : MonoBehaviour
     public GameObject[] PlayerArr { get { return _playerArr; } }
     CenterPlayers _camPlayerCenter;
     GameObject[] _particleArr;
+
+    bool _gameOver = false;
+    public bool GameOver { get { return _gameOver; } }
+    [SerializeField] string _resultSceneName;
 
     [SerializeField] Transform _rightWallThrowPosi;
     [SerializeField] Transform _leftWallThrowPosi;
@@ -70,7 +75,8 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        _time -= Time.deltaTime;
+        if(!GameOver)
+            _time -= Time.deltaTime;
         int intTime = (int)_time;
         _timeTx.text = (intTime.ToString());
     }
@@ -110,5 +116,12 @@ public class GameManager : MonoBehaviour
         if (player == "Player1")
             _winner.text = "2P PLAYER WIN";
         else _winner.text = "1P PLAYER WIN";
+        _gameOver = true;
+        Invoke("ResultLoadScene", 2f);
+    }
+
+    private void ResultLoadScene()
+    {
+        SceneManager.LoadScene(_resultSceneName);
     }
 }

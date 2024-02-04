@@ -102,11 +102,6 @@ public class PlayerMove : MonoBehaviour
         {
             _rb.velocity = new Vector3(_jumpDirec.x * _JumpHoriPower,_rb.velocity.y ,0);
         }
-
-        if(_vecZero)
-        {
-            _rb.velocity = Vector3.zero;
-        }
     }
 
     public void ThrowWallMove(Vector3 PtoWallPos)
@@ -172,12 +167,6 @@ public class PlayerMove : MonoBehaviour
     public void RbVelocityZero()
     {
         _rb.velocity = Vector3.zero;
-        _vecZero = true;
-    }
-
-    public void RbVelocityfalse() 
-    { 
-        _vecZero = false;
     }
 
     void OnAnimatorMove()

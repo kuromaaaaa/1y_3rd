@@ -18,11 +18,13 @@ public class PlayerInput : MonoBehaviour
 
     PlayerAttacks _pa;
     Animator _anim;
+    GameManager _gm;
     // Start is called before the first frame update
     void Start()
     {
         _pa = GetComponent<PlayerAttacks>();
         _anim = GetComponent<Animator>();
+        _gm = GameObject.Find("GameManager").GetComponent<GameManager>();
         if (this.gameObject.tag == "Player1")
             _1P = true;
     }
@@ -30,7 +32,11 @@ public class PlayerInput : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        if (_gm.GameOver == true)
+        {
+            _tenKey = 5;
+            return;
+        }
         bool jakuP;
         bool kyouK;
         if(_1P)
