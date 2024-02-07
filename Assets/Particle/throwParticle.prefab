@@ -11,10 +11,9 @@ GameObject:
   - component: {fileID: 3493937962271553756}
   - component: {fileID: 3493937962271553754}
   - component: {fileID: 3493937962271553755}
-  - component: {fileID: 6392774732880198348}
-  - component: {fileID: 3596950997330496104}
+  - component: {fileID: 81956666149754115}
   m_Layer: 0
-  m_Name: HadoHit
+  m_Name: throwParticle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4763,7 +4762,7 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 2b5357b69b2c4d64c8c5a2218946b31f, type: 2}
+  - {fileID: 2100000, guid: 8544cd9168ba5374fafdb2dedd53f9cc, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -4814,20 +4813,7 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
---- !u!114 &6392774732880198348
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3493937962271553759}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d1c1613ca43edf34f9328fdb800ed204, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _destroyTime: 1
---- !u!82 &3596950997330496104
+--- !u!82 &81956666149754115
 AudioSource:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -4837,9 +4823,9 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: c4efcca1110fef34b9349f017a0a0462, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 348f4ff0decf735469bd6e383b3078fa, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.4
+  m_Volume: 0.5
   m_Pitch: 1
   Loop: 0
   Mute: 0

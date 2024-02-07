@@ -10,6 +10,7 @@ public class PlayerDamageHit : MonoBehaviour
     Animator _anim;
     [SerializeField, Tooltip("投げ後の位置")] float _throwEndDistance;
     [SerializeField] int _throwDamage;
+    [SerializeField] GameObject _throwAudio;
     // Start is called before the first frame update
     void Start()
     {
@@ -34,7 +35,7 @@ public class PlayerDamageHit : MonoBehaviour
             direc = new Vector3(direc.x * -1, direc.y, direc.z);
         }
         if((tenkey == 4 || tenkey == 1) && !_pdata.Damaging && _pdata.IsGround)
-        {
+        {//ガード
             _rb.AddForce(_pdirec.PlayerFo * -1);
             _anim.SetTrigger("Guard");
             _pdata.PP.ParticlePlay(4);
@@ -47,7 +48,6 @@ public class PlayerDamageHit : MonoBehaviour
             _rb.AddForce(direc,ForceMode.Impulse);
             _pdata.MinusHP(damage);
             _pdata.Damaging = true;
-            Debug.Log(_pdata.ComboCount);
         }
         else
         {//地上あたり
@@ -61,8 +61,8 @@ public class PlayerDamageHit : MonoBehaviour
             _rb.AddForce(_pdirec.PlayerFo * -2,ForceMode.Impulse);
             _pdata.MinusHP(damage);
             _pdata.Damaging = true;
-            Debug.Log(_pdata.ComboCount);
         }
+        GetComponent<PlayerMove>().IsJampingAir = false;
 
         if (_pdata.ComboCount == 3)
         {
@@ -77,10 +77,12 @@ public class PlayerDamageHit : MonoBehaviour
         _pdirec.Stop = false;
         this.transform.position = this.transform.position + _pdirec.PlayerFo * _throwEndDistance;
         _pdata.Enemy.GetComponent<PlayerData>().Flip = false;
+        GetComponent<PlayerMove>().JEH = false;
     }
 
     public void thrownDamage()
     {
         _pdata.MinusHP(_throwDamage);
+        Instantiate(_throwAudio);
     }
 }

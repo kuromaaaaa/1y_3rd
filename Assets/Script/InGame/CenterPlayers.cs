@@ -44,7 +44,6 @@ public class CenterPlayers : MonoBehaviour
             _camFlame = _throwSukaCamFlame;
             _moveParFlame = (direc * _throwSukaEndDistance) / _camFlame;
         }
-        Debug.Log(_moveParFlame);
         _nowFlame = 0;
         _throwing = true;
     }

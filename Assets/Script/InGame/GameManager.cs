@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class GameManager : MonoBehaviour
 {
@@ -14,7 +14,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] Text _timeTx;
     [SerializeField] Text _winner;
     GameObject[] _playerArr;
-    float _time = 99;
+    [SerializeField] float _time = 5;
     public GameObject[] PlayerArr { get { return _playerArr; } }
     CenterPlayers _camPlayerCenter;
     GameObject[] _particleArr;
@@ -25,10 +25,30 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] Transform _rightWallThrowPosi;
     [SerializeField] Transform _leftWallThrowPosi;
-    
-    // Start is called before the first frame update
+    [SerializeField] GameObject _timeUpTextPrefub;
+    [SerializeField] GameObject _readyPrefub;
+    [SerializeField] float _readyInsTime = 1;
+    [SerializeField] GameObject _fightPrefub;
+    [SerializeField] float _fightInsTime = 2;
+    [SerializeField] UnityEvent _pause;
+    [SerializeField] UnityEvent _resume;
+    bool _paused = false;
+    void Ready()
+    {
+        Instantiate(_readyPrefub).transform.parent = GameObject.Find("Canvas").transform;
+    }
+
+    void Fight()
+    {
+        Instantiate(_fightPrefub).transform.parent = GameObject.Find("Canvas").transform;
+        _gameOver = false;
+    }
+
     void Awake()
     {
+        Invoke("Ready", _readyInsTime);
+        Invoke("Fight", _fightInsTime);
+        _gameOver = true;
         _playerArr = GameObject.FindGameObjectsWithTag("Player");
         _particleArr = GameObject.FindGameObjectsWithTag("PlayerParticle");
         PlayerData pdp1;
@@ -75,9 +95,25 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(!GameOver)
+        if(!_paused && (Input.GetButtonDown("c1_menu") || Input.GetButtonDown("c2_menu")))
+        {
+            _pause.Invoke();
+        }
+        else if(_paused && (Input.GetButtonDown("c1_menu") || Input.GetButtonDown("c2_menu")))
+        {
+            _resume.Invoke();
+        }
+        if(!_gameOver)
             _time -= Time.deltaTime;
         int intTime = (int)_time;
+        if (intTime == 0 && !_gameOver)
+        {
+            _gameOver = true;
+            Instantiate(_timeUpTextPrefub).transform.parent = GameObject.Find("Canvas").transform;
+            _player1.layer = 6;
+            _player2.layer = 6;
+            Invoke("ResultLoadScene", 4f);
+        }
         _timeTx.text = (intTime.ToString());
     }
 
@@ -88,7 +124,6 @@ public class GameManager : MonoBehaviour
         if(hit && _rightWallThrowPosi.position.x < pos.x && direc.x > 0)
         {
             playertoWallPos = new Vector3(_rightWallThrowPosi.position.x - pos.x, 0, 0);
-            Debug.Log(playertoWallPos);
             foreach (GameObject player in PlayerArr)
             {
                 player.GetComponent<PlayerMove>().ThrowWallMove(playertoWallPos);
@@ -97,17 +132,15 @@ public class GameManager : MonoBehaviour
         else if(hit && _leftWallThrowPosi.position.x > pos.x && direc.x < 0)
         {
             playertoWallPos = new Vector3(_leftWallThrowPosi.position.x - pos.x, 0, 0);
-            Debug.Log(playertoWallPos);
             foreach (GameObject player in PlayerArr)
             {
                 player.GetComponent<PlayerMove>().ThrowWallMove(playertoWallPos);
             }
         }
-        else
+        else 
         {
             playertoWallPos = Vector3.zero;
         }
-        Debug.Log(direc);
         _camPlayerCenter.throwCam(direc, playertoWallPos, hit);
     }
 
@@ -116,8 +149,19 @@ public class GameManager : MonoBehaviour
         if (player == "Player1")
             _winner.text = "2P PLAYER WIN";
         else _winner.text = "1P PLAYER WIN";
+        GameObject.Find("BGM").GetComponent<AudioSource>().Stop();
         _gameOver = true;
         Invoke("ResultLoadScene", 2f);
+    }
+
+    public void gameStop()
+    {
+        _gameOver = true;
+    }
+
+    public void gameReStart() 
+    {
+        _gameOver = false;
     }
 
     private void ResultLoadScene()

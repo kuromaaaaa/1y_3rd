@@ -1,6 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using TMPro.EditorUtilities;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerMove : MonoBehaviour
@@ -18,8 +18,10 @@ public class PlayerMove : MonoBehaviour
     bool _isJumping;
     public bool IsJump { get { return _isJumping; } }
     bool _isJumpingAir = false;
+    public bool IsJampingAir { set { _isJumpingAir = value; } }
     Vector3 _jumpDirec;
     bool _jumpEnemyHit = false;
+    public bool JEH{ set { _jumpEnemyHit = value; } }
 
     bool _moveForward;
     bool _moveBack;
@@ -33,6 +35,9 @@ public class PlayerMove : MonoBehaviour
     Vector3 _throwVecParFlame;
     bool _throwMove = false;
 
+    Transform _right;
+    Transform _left;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -41,13 +46,23 @@ public class PlayerMove : MonoBehaviour
         _pd = GetComponent<PlayerData>();
         _anim = GetComponent<Animator>();
         _pa = GetComponent<PlayerAttacks>();
+        _right = GameObject.Find("Right").transform;
+        _left = GameObject.Find("Left").transform;
     }
 
     // Update is called once per frame
     void Update()
     {
+        if(transform.position.x > _right.position.x)
+        {
+            transform.position = new Vector3(_right.position.x - 0.5f, this.transform.position.y, this.transform.position.z);
+        }
+        else if(transform.position.x < _left.position.x)
+        {
+            transform.position = new Vector3(_left.position.x - 0.5f, this.transform.position.y, this.transform.position.z);
+        }
+
         _direction = GetComponent<PlayerDirection>().PlayerFo;
-        //Debug.Log(_input.TenKey);
         if(_input.TenKey == 6 && !_pd.Damaging && !_pa.Attacking && !_isJumping)
         {
             _rb.velocity = new Vector3(_direction.x * _movePower, _rb.velocity.y, 0);
@@ -70,7 +85,6 @@ public class PlayerMove : MonoBehaviour
             _isJumping = true;
             _moveBack = false;
             _moveForward = false;
-            Debug.Log("Jump");
         }
         else if((_input.TenKey == 1 || _input.TenKey == 2 || _input.TenKey == 3 ) 
                     && !_pd.Damaging && !_pa.Attacking && !_isJumping)
@@ -167,6 +181,11 @@ public class PlayerMove : MonoBehaviour
     public void RbVelocityZero()
     {
         _rb.velocity = Vector3.zero;
+    }
+    
+    public void AttackingOn()
+    {
+        _pa.Attacking = true;
     }
 
     void OnAnimatorMove()

@@ -60,8 +60,6 @@ public class PlayerInput : MonoBehaviour
         if (jakuP)
         {
             ListSimple();
-            if(_simpleList.Count > 1)
-                Debug.Log(string.Join(" ", _simpleList));
             if (_simpleList.Count > 2)
             {
                 if (_simpleList.Count > 2 && _simpleList[_simpleList.Count - 1] == 3 && _simpleList[_simpleList.Count - 2] == 2 && _simpleList[_simpleList.Count - 3] == 6)

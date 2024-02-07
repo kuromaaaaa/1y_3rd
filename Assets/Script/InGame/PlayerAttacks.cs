@@ -55,7 +55,6 @@ public class PlayerAttacks : MonoBehaviour
     {
         if ((!_attacking && _pdata.IsGround) || _cancelCommandAttack)
         {
-            Debug.Log("è∏ó≥");
             _anim.SetTrigger("triggerSyoryu");
             _syoryu = true;
             _attacking = true;
@@ -77,7 +76,6 @@ public class PlayerAttacks : MonoBehaviour
     {
         if ((!_attacking && _pdata.IsGround) || _cancelCommandAttack)
         {
-            Debug.Log("îgìÆ");
             _anim.SetTrigger("triggerHado");
             _hado = true;
             _attacking = true;
@@ -88,13 +86,11 @@ public class PlayerAttacks : MonoBehaviour
     {
         if (!_attacking && (tenKey == 1 || tenKey == 2 || tenKey == 3) && _pdata.IsGround && !_pdata.Damaging)
         {
-            Debug.Log("2P");
             _anim.SetTrigger("trigger2P");
             _attacking = true;
         }
         else if (!_attacking && _pdata.IsGround && !_pdata.Damaging)
         {
-            Debug.Log("5P");
             _anim.SetTrigger("trigger5P");
             _attacking = true;
         }
@@ -103,13 +99,11 @@ public class PlayerAttacks : MonoBehaviour
     {
         if(!_attacking && (tenKey == 1 || tenKey == 2 || tenKey == 3) && _pdata.IsGround && !_pdata.Damaging)
         {
-            Debug.Log("2K");
             _anim.SetTrigger("trigger2K");
             _attacking = true;
         }
         else if(!_attacking && _pdata.IsGround && !_pdata.Damaging)
         {
-            Debug.Log("5K");
             _anim.SetTrigger("trigger5K");
             _attacking = true;
         }
@@ -119,7 +113,6 @@ public class PlayerAttacks : MonoBehaviour
     {
         if (_nageKanou && _pdata.IsGround)
         {
-            Debug.Log("ìäÇ∞");
             _anim.SetTrigger("triggerThrow");
         }
         _syoryu = false;
@@ -159,7 +152,6 @@ public class PlayerAttacks : MonoBehaviour
 
     public void hado()
     {
-        Debug.Log("îgìÆåù");
         GameObject tama = Instantiate(_hadoPrefub);
         tama.transform.position = this.transform.position;
         Vector3 tamaVec = GetComponent<PlayerDirection>().PlayerFo;
@@ -189,6 +181,7 @@ public class PlayerAttacks : MonoBehaviour
         if (hit == 1)
         {
             this.transform.position = this.transform.position + (_pdire.ThrowEndFo * _throwEndDistance);
+            GetComponent<PlayerMove>().JEH = false;
             _pdata.Flip = true;
         }
         else
